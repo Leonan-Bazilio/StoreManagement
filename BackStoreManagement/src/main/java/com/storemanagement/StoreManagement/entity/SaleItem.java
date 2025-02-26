@@ -1,5 +1,7 @@
 package com.storemanagement.StoreManagement.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
@@ -9,18 +11,19 @@ import java.math.BigDecimal;
 
 
 @Entity
-@Getter
-@Setter
 @Data
 public class SaleItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("saleItemId")
     private Long id;
     
     @ManyToOne
     @JoinColumn(name = "sale_id")
+    @JsonIgnore
     private Sale sale;
     
+    private Long productId;
     private int quantity;
     private BigDecimal costPriceAtSale;
     private BigDecimal sellingPriceAtSale;
