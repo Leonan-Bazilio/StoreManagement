@@ -1,0 +1,52 @@
+.footer {
+  background-color: #007bff;
+  color: white;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.brand {
+  text-align: center;
+}
+
+.brand h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.contacts {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.contacts p {
+  margin: 0.5rem 0;
+}
+
+.link {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: #f9f9f9;
+}
+
+@media (max-width: 768px) {
+  .content {
+    gap: 1rem;
+  }
+}
