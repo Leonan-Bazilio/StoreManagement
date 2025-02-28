@@ -8,5 +8,5 @@ export default interface Product {
   lowStockLimit: number;
   criticalStockLimit: number;
   imagePath?: string;
-  createdAt?: Date;
+  createdAt: Date | number | string;
 }
