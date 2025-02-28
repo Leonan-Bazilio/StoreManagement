@@ -1,0 +1,227 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.content {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  width: 80%;
+  max-width: 850px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.content::-webkit-scrollbar {
+  display: none;
+}
+.createDate {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.closeBtn {
+  font-size: 1.5rem;
+  color: red;
+  cursor: pointer;
+  padding: 0.25rem;
+
+  background-color: transparent;
+  font-weight: bold;
+  border: none;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+} /*deixar isso temporariamnete depois produro os simbolos bonitinhos para colocar*/
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.row1 {
+  display: flex;
+  gap: 2rem;
+}
+
+.image {
+  height: 200px;
+  width: 200px;
+  border-radius: 8px;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.textContent h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.container p,
+.container h2 {
+  background-color: #f8f8f8;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+p::first-letter {
+  text-transform: uppercase;
+} /*colocar iso no global depois e para outros elementos alem do "p"*/
+.textContent p {
+  flex: 1;
+}
+.row2 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.row3 {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+.addStock {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+.inputStock {
+  max-width: 170px;
+}
+
+.addButton,
+.btnEdit,
+.btnCancel {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addButton:hover,
+.btnEdit:hover {
+  background-color: #0056b3;
+}
+.divField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
+.divField p {
+  width: 100%;
+  text-align: center;
+}
+.divBtns {
+  display: flex;
+  justify-content: end;
+}
+.divBtnsEditing {
+  display: flex;
+  justify-content: space-between;
+}
+.btnEdit,
+.btnCancel {
+  font-size: 1.25rem;
+  padding: 0.625rem 1.25rem;
+}
+.btnCancel {
+  background-color: #ff4444;
+}
+.btnCancel:hover {
+  background-color: #c91c1c;
+}
+.divBtns .btnCancel {
+  display: none;
+}
+
+/*a parte de baixo copiei do productForm vou remover umas partes mas tem que editar melhor*/
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.imageContainer {
+  flex: 1 1 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.imageInput {
+  display: none;
+}
+
+.imageLabel {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.imageLabel:hover {
+  border-color: #007bff;
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.textInputs {
+  flex: 2 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.textarea {
+  height: 100%;
+}
