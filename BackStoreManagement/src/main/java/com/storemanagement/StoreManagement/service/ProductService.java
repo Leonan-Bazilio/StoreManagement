@@ -73,6 +73,6 @@ public class ProductService {
         Product product = getProductById(id);
         int updatedQuantity = product.getQuantityInStock()+quantityToAdd;
         product.setQuantityInStock(updatedQuantity);
-        return product;
+        return productRepository.save(product);
     }
 }
