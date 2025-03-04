@@ -2,6 +2,7 @@ package com.storemanagement.StoreManagement.service;
 
 import com.storemanagement.StoreManagement.dto.SaleDTO;
 import com.storemanagement.StoreManagement.dto.SaleItemDTO;
+import com.storemanagement.StoreManagement.dto.SaleWithPricesDTO;
 import com.storemanagement.StoreManagement.entity.Product;
 import com.storemanagement.StoreManagement.entity.Sale;
 import com.storemanagement.StoreManagement.entity.SaleItem;
@@ -59,6 +60,11 @@ public class SaleService {
     
     public List<Sale> getAllSales() {
         return saleRepository.findAll();
+    }
+    
+    public List<SaleWithPricesDTO> getAllSalesWithPrice() {
+        return saleRepository.findAll().stream().
+                map(SaleWithPricesDTO::new).toList();
     }
     
     public Sale getSaleById(Long id) {

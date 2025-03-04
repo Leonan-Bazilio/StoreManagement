@@ -1,6 +1,7 @@
 package com.storemanagement.StoreManagement.controller;
 
 import com.storemanagement.StoreManagement.dto.SaleDTO;
+import com.storemanagement.StoreManagement.dto.SaleWithPricesDTO;
 import com.storemanagement.StoreManagement.entity.Sale;
 import com.storemanagement.StoreManagement.service.SaleService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,10 @@ public class SaleController {
     @GetMapping
     public ResponseEntity<List<Sale>> getAllSales() {
         return ResponseEntity.ok(saleService.getAllSales());
+    }
+    @GetMapping("/prices")
+    public ResponseEntity<List<SaleWithPricesDTO>> getAllSalesWithPrices() {
+        return ResponseEntity.ok(saleService.getAllSalesWithPrice());
     }
     
     @GetMapping("/{id}")
