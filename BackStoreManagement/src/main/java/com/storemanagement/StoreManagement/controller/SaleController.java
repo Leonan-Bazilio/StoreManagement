@@ -15,17 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SaleController {
     private final SaleService saleService;
-    
-    @PostMapping
-    public ResponseEntity<Sale> createSale(@RequestBody SaleDTO saleDTO) {
-        Sale createdSale = saleService.createSale(saleDTO);
-        return ResponseEntity.status(201).body(createdSale);
-    }
-    
-    @GetMapping
-    public ResponseEntity<List<Sale>> getAllSales() {
-        return ResponseEntity.ok(saleService.getAllSales());
-    }
     @GetMapping("/prices")
     public ResponseEntity<List<SaleWithPricesDTO>> getAllSalesWithPrices() {
         return ResponseEntity.ok(saleService.getAllSalesWithPrice());
@@ -35,6 +24,18 @@ public class SaleController {
     public ResponseEntity<Sale> getSaleById(@PathVariable Long id) {
         return ResponseEntity.ok(saleService.getSaleById(id));
     }
+    @PostMapping
+    public ResponseEntity<Sale> createSale(@RequestBody SaleDTO saleDTO) {
+        Sale createdSale = saleService.createSale(saleDTO);
+        return ResponseEntity.status(201).body(createdSale);
+    }
+ 
+    
+    @GetMapping
+    public ResponseEntity<List<Sale>> getAllSales() {
+        return ResponseEntity.ok(saleService.getAllSales());
+    }
+    
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSale(@PathVariable Long id) {

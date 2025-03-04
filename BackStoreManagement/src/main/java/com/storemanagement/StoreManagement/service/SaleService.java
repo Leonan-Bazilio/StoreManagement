@@ -22,11 +22,28 @@ public class SaleService {
     private final SaleRepository saleRepository;
     private final ProductRepository productRepository;
     
+    public List<Sale> getAllSales() {
+        return saleRepository.findAll();
+    }
+    
+    public List<SaleWithPricesDTO> getAllSalesWithPrice() {
+        return saleRepository.findAll().stream().
+                map(SaleWithPricesDTO::new).toList();
+    }
+    
+    public Sale getSaleById(Long id) {
+        return saleRepository.findById(id)
+                .orElseThrow(() -> new BusinessException("Venda não encontrada"));
+    }
+    
+    
     @Transactional
     public Sale createSale(SaleDTO saleDTO) {
         Sale sale = new Sale();
         sale.setDiscount(saleDTO.getDiscount());
-        sale.setSaleDate(saleDTO.getSaleDate());
+        if(saleDTO.getSaleDate()!=null){
+            sale.setSaleDate(saleDTO.getSaleDate());
+        }
         
         List<SaleItem> saleItems = new ArrayList<>();
         
@@ -58,19 +75,7 @@ public class SaleService {
         return saleRepository.save(sale);
     }
     
-    public List<Sale> getAllSales() {
-        return saleRepository.findAll();
-    }
     
-    public List<SaleWithPricesDTO> getAllSalesWithPrice() {
-        return saleRepository.findAll().stream().
-                map(SaleWithPricesDTO::new).toList();
-    }
-    
-    public Sale getSaleById(Long id) {
-        return saleRepository.findById(id)
-                .orElseThrow(() -> new BusinessException("Venda não encontrada"));
-    }
     
     @Transactional
     public void deleteSale(Long id) {

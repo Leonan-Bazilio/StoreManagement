@@ -22,7 +22,12 @@ public class Sale {
     private List<SaleItem> items = new ArrayList<>();
     
     private BigDecimal discount;
-    private LocalDateTime saleDate= LocalDateTime.now();
+    private LocalDateTime saleDate;
     
-    
+    @PrePersist
+    public void prePersist(){
+        if(saleDate==null){
+            saleDate=LocalDateTime.now();
+        }
+    }
 }
