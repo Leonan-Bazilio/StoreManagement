@@ -29,7 +29,13 @@ public class SaleController {
         Sale createdSale = saleService.createSale(saleDTO);
         return ResponseEntity.status(201).body(createdSale);
     }
- 
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Sale> updateSale(@PathVariable Long id,@RequestBody SaleDTO saleDTO){
+        Sale updatedSale = saleService.updateSale(id,saleDTO);
+        return ResponseEntity.status(201).body(updatedSale);
+    
+    }
     
     @GetMapping
     public ResponseEntity<List<Sale>> getAllSales() {
