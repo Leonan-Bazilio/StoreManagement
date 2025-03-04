@@ -1,0 +1,173 @@
+/* por enquanto deixando a barra de rolagem mesmo quando abre o modal, talvez no SaleHistory colocar quando abrir esse modal remover completamente a barra*/
+.container {
+  overflow: hidden;
+  position: fixed;
+  background-color: green;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+}
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.containerItems {
+  background-color: blue;
+  min-height: 80%;
+  width: 80%;
+  max-width: 1050px;
+  padding: 1rem;
+  margin: 10vh auto;
+  display: flex;
+
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+}
+.cartItem {
+  background-color: red;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.cartItem:hover {
+  background-color: #f0f0f0;
+}
+.cartProductImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.cartProductInfo {
+  flex: 1;
+  font-size: 14px;
+}
+
+.cartProductInfo span {
+  font-weight: bold;
+}
+
+.cartProductInfo p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+}
+
+.quantityButton {
+  width: 30px;
+  height: 30px;
+  background-color: #f1f1f1;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityButton:disabled {
+  cursor: not-allowed;
+  background-color: #e0e0e0;
+}
+
+.quantityInput {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.removeButton {
+  margin-left: 10px;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: darkred;
+}
+.divDiscount {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.discount {
+  max-width: 130px;
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+}
+.discount:focus {
+  border: 2px solid #ccc;
+  outline: none;
+}
+.divSubmitButton {
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 70%;
+  justify-self: center;
+  align-self: center;
+  padding: 10px 20px;
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.submitButton:hover {
+  background-color: darkgreen;
+}
+
+.addSale {
+  width: 100%;
+  height: 75px;
+  background-color: orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.addSale button {
+  font-size: 3rem;
+  padding: 6px 16px;
+  border-radius: 100%;
+  background-color: transparent;
+  border: 1px solid #232323;
+  cursor: pointer;
+}
+
+.addingProductContainer {
+  background-color: rgba(0, 128, 0, 0.8);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.hide {
+  display: none;
+}
