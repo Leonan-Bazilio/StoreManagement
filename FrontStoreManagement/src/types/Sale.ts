@@ -5,5 +5,5 @@ export default interface Sale {
   items: SaleItem[];
   discount: number;
   saleDate: Date;
-  totalPrice: number;
+  totalPrice?: number;
 }

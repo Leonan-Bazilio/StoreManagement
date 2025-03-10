@@ -1,0 +1,179 @@
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  font-family: Arial, sans-serif;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.dateFields {
+  display: flex;
+  gap: 1rem;
+}
+
+.dateField {
+  display: flex;
+  flex-direction: column;
+}
+
+.dateInput {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.summary {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.salesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.saleItem {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  background: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.saleHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saleDate {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.saleTime {
+  font-size: 1rem;
+  color: #777;
+}
+
+.expandButton {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.expandButton:hover {
+  background: #0056b3;
+}
+
+.saleDetails {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.saleItems {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.saleItemDetail,
+.saleItemDetailEach {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.saleItemDetailEach {
+  flex-direction: row;
+}
+
+.itemName {
+  flex: 3;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.itemCost,
+.itemSelling,
+.itemProfit {
+  flex: 1;
+  text-align: right;
+  font-size: 1rem;
+}
+
+.subtotal {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: #333;
+}
+
+.loading {
+  text-align: center;
+  font-size: 1.5rem;
+  color: #555;
+}
+
+.error {
+  text-align: center;
+  font-size: 1.5rem;
+  color: red;
+}
+.exportButton {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
+.exportButton:hover {
+  background-color: #218838;
+}

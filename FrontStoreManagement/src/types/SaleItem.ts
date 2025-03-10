@@ -1,5 +1,5 @@
 export default interface SaleItem {
-  saleItemId: number;
+  saleItemId?: number;
   productId: number;
   quantity: number;
   costPriceAtSale: number;
@@ -7,5 +7,5 @@ export default interface SaleItem {
   productNameAtSale: string;
   productDescriptionAtSale: string;
   imagePath: string;
-  subTotal: number;
+  subTotal?: number;
 }

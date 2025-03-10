@@ -7,6 +7,6 @@ export default interface Product {
   quantityInStock: number;
   lowStockLimit: number;
   criticalStockLimit: number;
-  imagePath?: string;
+  imagePath: string;
   createdAt: Date | number | string;
 }
