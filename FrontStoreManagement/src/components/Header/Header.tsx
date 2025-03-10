@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
-
+import { ThemeContext } from "../../context/ThemeContext";
 interface DropdownItem {
   title: string;
   links: { to: string; text: string }[];
 }
 
 const Header: React.FC = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext)!;
   const dropdownItems: DropdownItem[] = [
     {
       title: "Produto",
@@ -49,6 +50,9 @@ const Header: React.FC = () => {
           </div>
         ))}
       </nav>
+      <button onClick={toggleTheme} className={styles.themeToggle}>
+        {theme === "light" ? "🌙" : "☀️"}
+      </button>
     </header>
   );
 };

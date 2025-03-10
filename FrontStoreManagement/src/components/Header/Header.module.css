@@ -1,75 +1,48 @@
+/* Header.module.css */
 .header {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 1rem 10%;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-transform: uppercase;
+  padding: 15px 30px;
 }
 
 .nav {
-  width: 100%;
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  justify-content: space-around;
+  gap: 20px;
 }
 
 .dropdown {
   position: relative;
-  text-align: center;
-  width: 150px;
 }
 
 .dropdownTitle {
-  padding: 0.5rem 1rem;
-  color: white;
-  font-weight: bold;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.dropdownTitle:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
 }
 
 .dropdownContent {
+  display: none;
   position: absolute;
-  top: 0%;
-  left: 0;
-  width: 100%;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  display: block;
-  z-index: 2;
-  opacity: 0;
-  transition: top 0.3s ease, opacity 0.3s ease;
+  background-color: var(--secondary-color);
+  padding: 10px;
+  border-radius: 5px;
 }
 
 .dropdown:hover .dropdownContent {
   display: block;
-  top: 100%;
-  opacity: 1;
 }
 
 .link {
-  display: block;
-  padding: 0.75rem;
+  color: var(--text-color);
   text-decoration: none;
-  color: #333;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  display: block;
+  padding: 5px 0;
 }
 
-.link:hover {
-  background-color: #3395ff;
-  color: white;
+.themeToggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
