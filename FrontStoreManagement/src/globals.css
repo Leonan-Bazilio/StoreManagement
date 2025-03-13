@@ -6,11 +6,12 @@
 :root {
   --primary-color: #ffffff;
   --secondary-color: #f0f0f0;
-  --text-color: #000000;
+  --text-color: #262626;
+  --hover-color: #ff6347;
 }
 
 [data-theme="dark"] {
   --primary-color: #121212;
   --secondary-color: #1e1e1e;
-  --text-color: #ffffff;
+  --text-color: #e9e9e9;
 }

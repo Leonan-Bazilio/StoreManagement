@@ -1,52 +1,51 @@
 .footer {
-  background-color: #007bff;
-  color: white;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
-  margin-top: 2rem;
-}
-
-.content {
+  width: 100%;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  padding: 30px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.brand {
-  text-align: center;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .brand h3 {
   font-size: 1.8rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
 }
 
 .contacts {
-  text-align: center;
-  font-size: 1rem;
-}
-
-.contacts p {
-  margin: 0.5rem 0;
+  width: 60%;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .link {
-  color: white;
+  color: var(--text-color);
   text-decoration: none;
-  font-weight: bold;
+  font-size: 1rem;
   transition: color 0.3s ease;
+  position: relative;
 }
 
 .link:hover {
-  color: #f9f9f9;
+  color: var(--hover-color);
 }
 
-@media (max-width: 768px) {
-  .content {
-    gap: 1rem;
-  }
+.link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--text-color);
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease-in-out;
+}
+
+.link:hover::after {
+  width: 100%;
 }

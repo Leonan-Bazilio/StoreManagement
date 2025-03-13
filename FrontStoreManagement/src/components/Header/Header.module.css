@@ -1,4 +1,3 @@
-/* Header.module.css */
 .header {
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -8,8 +7,22 @@
   padding: 15px 30px;
 }
 
+.brand {
+  width: min-content;
+  padding: 4px 12px;
+  max-width: 10%;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.brand:hover {
+  color: var(--hover-color);
+}
+
 .nav {
+  min-width: 70%;
   display: flex;
+  justify-content: space-around;
   gap: 20px;
 }
 
@@ -19,6 +32,20 @@
 
 .dropdownTitle {
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0px 6px 4px 6px;
+}
+
+.arrow {
+  width: 14px;
+  transition: transform 0.5s ease;
+  margin-left: 5px;
+}
+
+.dropdown:hover .arrow {
+  transform: rotate(180deg);
 }
 
 .dropdownContent {
@@ -27,22 +54,97 @@
   background-color: var(--secondary-color);
   padding: 10px;
   border-radius: 5px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .dropdown:hover .dropdownContent {
   display: block;
 }
 
+.dropdownTitle::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--text-color);
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  transition: width 0.3s ease-in-out;
+}
+.dropdownTitle {
+  transition: color 0.3s ease;
+}
+
+.dropdownTitle:hover::after {
+  width: 100%;
+}
+.dropdownTitle:hover {
+  color: var(--hover-color);
+}
+
 .link {
   color: var(--text-color);
   text-decoration: none;
   display: block;
-  padding: 5px 0;
+  padding: 6px 4px;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background-color: var(--text-color);
+  margin: auto;
+  transition: width 0.3s ease-in-out;
+}
+.link:hover {
+  color: var(--hover-color);
+}
+.link:hover::after {
+  width: 100%;
 }
 
 .themeToggle {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+}
+
+.themeSwitch {
+  display: flex;
+  align-items: center;
+  background: #555;
+  padding: 5px 8px;
+  border-radius: 20px;
+  position: relative;
+  width: 56px;
+  justify-content: space-between;
+}
+.iconSun {
+  color: #ff9f00;
+}
+.iconMoon {
+  color: white;
+}
+.icon {
+  font-size: 20px;
+  opacity: 0.2;
+  transition: opacity 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 100%;
+  width: 16px;
+  height: 16px;
+}
+
+.active {
+  opacity: 1;
 }

@@ -2,6 +2,9 @@ import React, { useContext } from "react";
 import styles from "./Header.module.css";
 import { Link } from "react-router-dom";
 import { ThemeContext } from "../../context/ThemeContext";
+import { IoIosArrowDown } from "react-icons/io";
+import { MdDarkMode, MdLightMode } from "react-icons/md";
+
 interface DropdownItem {
   title: string;
   links: { to: string; text: string }[];
@@ -35,11 +38,16 @@ const Header: React.FC = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.logo}>LEO</div>
+      <div className={styles.brand}>
+        <h3>Mercearia Cardoso</h3>
+      </div>
       <nav className={styles.nav}>
         {dropdownItems.map((item) => (
           <div className={styles.dropdown} key={item.title}>
-            <div className={styles.dropdownTitle}>{item.title}</div>
+            <div className={styles.dropdownTitle}>
+              <h4>{item.title}</h4>
+              <IoIosArrowDown className={styles.arrow} />
+            </div>
             <div className={styles.dropdownContent}>
               {item.links.map((link) => (
                 <Link to={link.to} className={styles.link} key={link.to}>
@@ -50,8 +58,20 @@ const Header: React.FC = () => {
           </div>
         ))}
       </nav>
+
       <button onClick={toggleTheme} className={styles.themeToggle}>
-        {theme === "light" ? "🌙" : "☀️"}
+        <div className={styles.themeSwitch}>
+          <MdLightMode
+            className={`${styles.icon} ${
+              theme === "light" ? styles.active : ""
+            } ${styles.iconSun}`}
+          />
+          <MdDarkMode
+            className={`${styles.icon} ${
+              theme === "dark" ? styles.active : ""
+            } ${styles.iconMoon}`}
+          />
+        </div>
       </button>
     </header>
   );
