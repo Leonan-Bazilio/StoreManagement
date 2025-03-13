@@ -84,7 +84,11 @@ const ShowAllProducts: React.FC = () => {
                   {truncateDescription(prod.description, 40)}
                 </p>
                 <p className={styles.productPrice}>
-                  <strong>Preço:</strong> R$ {prod.sellingPrice.toFixed(2)}
+                  <strong>Preço:</strong> R${" "}
+                  {prod.sellingPrice.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
                 </p>
                 <p className={styles.productStock}>
                   <strong>Estoque:</strong> {prod.quantityInStock}
