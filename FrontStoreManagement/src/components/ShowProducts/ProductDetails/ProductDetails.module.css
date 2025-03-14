@@ -12,8 +12,9 @@
 }
 
 .content {
-  background: #ffffff;
-  border-radius: 12px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   padding: 2.5rem;
   width: 80%;
@@ -34,19 +35,32 @@
   top: 12px;
   left: 12px;
 }
+.divCloseBtn {
+  display: flex;
+  justify-content: end;
+  align-items: start;
+  position: sticky;
+  top: 0;
+  right: 0;
+}
 .closeBtn {
-  font-size: 1.5rem;
-  color: red;
+  color: var(--cancel-color);
   cursor: pointer;
-  padding: 0.25rem;
-
   background-color: transparent;
   font-weight: bold;
   border: none;
+  z-index: 10;
+  background-color: transparent;
+  position: relative;
+}
+.icon {
   position: absolute;
-  right: 12px;
-  top: 12px;
-} /*deixar isso temporariamnete depois produro os simbolos bonitinhos para colocar*/
+  top: -24px;
+  right: -24px;
+  font-size: 24px;
+
+  background-color: transparent;
+}
 
 @keyframes fadeIn {
   from {
@@ -68,6 +82,7 @@
   height: 200px;
   width: 200px;
   border-radius: 8px;
+  object-fit: fill;
 }
 
 .textContent {
@@ -81,16 +96,17 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
-
+.divField {
+}
 .container p,
 .container h2 {
-  background-color: #f8f8f8;
+  background-color: var(--primary-color);
   padding: 0.5rem;
   border-radius: 4px;
 }
 p::first-letter {
   text-transform: uppercase;
-} /*colocar iso no global depois e para outros elementos alem do "p"*/
+}
 .textContent p {
   flex: 1;
 }
@@ -120,10 +136,10 @@ p::first-letter {
 .addButton,
 .btnEdit,
 .btnCancel {
-  background-color: #007bff;
-  color: #fff;
+  background-color: var(--success-color);
+  color: var(--text-btn-color);
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.75rem 1rem;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -131,7 +147,7 @@ p::first-letter {
 
 .addButton:hover,
 .btnEdit:hover {
-  background-color: #0056b3;
+  background-color: var(--success-hover);
 }
 .divField {
   display: flex;
@@ -157,16 +173,14 @@ p::first-letter {
   padding: 0.625rem 1.25rem;
 }
 .btnCancel {
-  background-color: #ff4444;
+  background-color: var(--cancel-color);
 }
 .btnCancel:hover {
-  background-color: #c91c1c;
+  background-color: var(--cancel-hover);
 }
 .divBtns .btnCancel {
   display: none;
 }
-
-/*a parte de baixo copiei do productForm vou remover umas partes mas tem que editar melhor*/
 
 .form h2 {
   text-align: center;

@@ -12,6 +12,7 @@
   --success-color: #28a745;
   --success-hover: #1a682c;
   --cancel-color: #dc3545;
+  --cancel-hover: #851f29;
   --border-color: #ccc;
   --text-btn-color: white;
 }
@@ -19,7 +20,7 @@
 [data-theme="dark"] {
   --primary-color: #121212;
   --secondary-color: #a0a0a0;
-  --text-color: #e9e9e9;
+  --text-color: blue;
   --text-color2: red;
   --hover-color: #ff6347;
   --success-color: #28a745;

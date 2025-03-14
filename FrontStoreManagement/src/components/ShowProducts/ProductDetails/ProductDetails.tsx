@@ -1,9 +1,9 @@
 import React, { useState, ChangeEvent, MouseEvent, useEffect } from "react";
 import styles from "./ProductDetails.module.css";
-import InputField from "../InputField/InputField";
+import InputField from "../../InputField/InputField";
 import axios from "axios";
-import Product from "../../types/Product";
-
+import Product from "../../../types/Product";
+import { FaTimes } from "react-icons/fa";
 interface ProductDetailsProps {
   product: Product;
   refreshProducts: () => void;
@@ -52,6 +52,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
         headers: { "Content-Type": "multipart/form-data" },
       });
       alert("Produto atualizado com sucesso");
+      refreshProducts();
     } catch (error) {
       console.error("Erro ao atualizar produto:", error);
       alert("Erro ao atualizar produto");
@@ -91,9 +92,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             minute: "2-digit",
           })}
         </span>
-        <button className={styles.closeBtn} onClick={onClose}>
-          X
-        </button>
+        <div className={styles.divCloseBtn}>
+          <button className={styles.closeBtn} onClick={onClose}>
+            <FaTimes className={styles.icon} />
+          </button>
+        </div>
         {editingProduct ? (
           <form className={styles.form} onSubmit={handleUpdate}>
             <div className={styles.row}>
@@ -159,21 +162,21 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             <div className={styles.row}>
               <InputField
                 type="number"
-                nameAndId="stockQuantity"
+                nameAndId="quantityInStock"
                 textLabel="Quantidade em Estoque"
                 value={productData.quantityInStock}
                 onChange={handleChange}
               />
               <InputField
                 type="number"
-                nameAndId="intermediateWarningQuantity"
+                nameAndId="lowStockLimit"
                 textLabel="Estoque Mínimo"
                 value={productData.lowStockLimit}
                 onChange={handleChange}
               />
               <InputField
                 type="number"
-                nameAndId="alertQuantity"
+                nameAndId="criticalStockLimit"
                 textLabel="Quantidade de Alerta"
                 value={productData.criticalStockLimit}
                 onChange={handleChange}
@@ -249,7 +252,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               </div>
             </div>
             <div className={styles.divBtns}>
-              <button className={styles.btnCancel} onClick={handleEditing}>
+              <button className={styles.btnEdit} onClick={handleEditing}>
                 Editar
               </button>
             </div>

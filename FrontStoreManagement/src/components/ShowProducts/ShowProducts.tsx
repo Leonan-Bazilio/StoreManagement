@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./ShowProducts.module.css";
 import InputField from "../InputField/InputField";
-import ProductDetails from "../ProductDetails/ProductDetails";
+import ProductDetails from "./ProductDetails/ProductDetails";
 import Product from "../../types/Product";
 
 const ShowAllProducts: React.FC = () => {
