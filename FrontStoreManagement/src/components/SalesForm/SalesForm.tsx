@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./SalesForm.module.css";
 import InputField from "../InputField/InputField";
 import Product from "../../types/Product";
+import formatCurrency from "../../utils/formatCurrency";
 
 interface CartItem {
   product: Product;
@@ -13,7 +14,7 @@ const SalesForm: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [discount, setDiscount] = useState<number | null>(null);
+  const [discount, setDiscount] = useState<number>(0);
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -29,6 +30,14 @@ const SalesForm: React.FC = () => {
 
     fetchProducts();
   }, []);
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { value } = e.target;
+
+    setDiscount(parseFloat(value.replace(/[^\d.-]/g, "")) || 0);
+  };
 
   const subTotal = cart.reduce((acc, item) => {
     return acc + item.quantity * item.product.sellingPrice;
@@ -187,15 +196,16 @@ const SalesForm: React.FC = () => {
         ))}
         <div className={styles.divDiscount}>
           <h4>subtotal: R$ {subTotal} </h4>
-          <input
-            type="number"
-            className={styles.discount}
-            placeholder="desconto"
-            value={discount ?? ""}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              setDiscount(parseFloat(e.target.value) || null)
-            }
-          />
+          <div>
+            <InputField
+              type="text"
+              className={styles.discount}
+              textLabel="desconto"
+              value={formatCurrency(discount.toString())}
+              nameAndId={"discount"}
+              onChange={handleChange}
+            />
+          </div>
           <h3>Total: R$ {total}</h3>
         </div>
         <div className={styles.divSubmitButton}>
