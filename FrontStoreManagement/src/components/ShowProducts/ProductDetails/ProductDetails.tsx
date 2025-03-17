@@ -4,6 +4,7 @@ import InputField from "../../InputField/InputField";
 import axios from "axios";
 import Product from "../../../types/Product";
 import { FaTimes } from "react-icons/fa";
+import formatCurrency from "../../../utils/formatCurrency";
 interface ProductDetailsProps {
   product: Product;
   refreshProducts: () => void;
@@ -24,7 +25,16 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setProductData({ ...productData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "costPrice" || name === "sellingPrice") {
+      setProductData({
+        ...productData,
+        [name]: parseFloat(value.replace(/[^\d.-]/g, "")) || 0,
+      });
+    } else {
+      setProductData({ ...productData, [name]: value });
+    }
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -144,18 +154,18 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             </div>
             <div className={styles.row}>
               <InputField
-                type="number"
+                type="text"
                 nameAndId="costPrice"
                 textLabel="Preço de Custo"
-                value={productData.costPrice}
+                value={formatCurrency(productData.costPrice.toString())}
                 onChange={handleChange}
                 className={styles.input}
               />
               <InputField
-                type="number"
+                type="text"
                 nameAndId="sellingPrice"
                 textLabel="Preço de Venda"
-                value={productData.sellingPrice}
+                value={formatCurrency(productData.sellingPrice.toString())}
                 onChange={handleChange}
               />
             </div>
@@ -211,11 +221,11 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             <div className={styles.row2}>
               <div className={styles.divField}>
                 <p>Preço de custo: </p>
-                <p>R$ {productData.costPrice},00</p>
+                <p>{formatCurrency(productData.costPrice.toString())}</p>
               </div>
               <div className={styles.divField}>
                 <p>Preço de venda </p>
-                <p>R$ {productData.sellingPrice},00</p>
+                <p>{formatCurrency(productData.sellingPrice.toString())}</p>
               </div>
             </div>
             <div className={styles.row3}>

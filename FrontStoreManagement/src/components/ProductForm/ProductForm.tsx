@@ -3,17 +3,7 @@ import axios from "axios";
 import styles from "./ProductForm.module.css";
 import InputField from "../InputField/InputField";
 import Product from "../../types/Product";
-
-const formatCurrency = (value: string) => {
-  const numericValue = value.replace(/[^\d]/g, "");
-
-  const formattedValue = parseInt(numericValue, 10) / 100;
-
-  return new Intl.NumberFormat("pt-BR", {
-    style: "currency",
-    currency: "BRL",
-  }).format(formattedValue);
-};
+import formatCurrency from "../../utils/formatCurrency";
 
 const ProductForm: React.FC = () => {
   const [product, setProduct] = useState<

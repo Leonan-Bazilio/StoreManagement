@@ -96,8 +96,6 @@
   font-size: 1.5rem;
   font-weight: bold;
 }
-.divField {
-}
 .container p,
 .container h2 {
   background-color: var(--primary-color);
@@ -186,7 +184,7 @@ p::first-letter {
   text-align: center;
   margin-bottom: 1.5rem;
   font-size: 1.5rem;
-  color: #333;
+  color: var(--text-color);
 }
 
 .row {
@@ -211,15 +209,15 @@ p::first-letter {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f0f0f0;
-  border: 2px dashed #ccc;
+  background-color: var(--primary-color);
+  border: 2px dashed var(--border-color);
   border-radius: 8px;
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .imageLabel:hover {
-  border-color: #007bff;
+  border-color: var(--success-color);
 }
 
 .previewImage {
