@@ -15,6 +15,7 @@ const SalesForm: React.FC = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [discount, setDiscount] = useState<number>(0);
+  const [dateAndTime, setDateAndTime] = useState("");
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -34,9 +35,12 @@ const SalesForm: React.FC = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    const { value } = e.target;
-
-    setDiscount(parseFloat(value.replace(/[^\d.-]/g, "")) || 0);
+    const { name, value } = e.target;
+    if (name == "discount") {
+      setDiscount(parseFloat(value.replace(/[^\d.-]/g, "")) || 0);
+    } else if (name == "dateAndTime") {
+      setDateAndTime(value);
+    }
   };
 
   const subTotal = cart.reduce((acc, item) => {
@@ -88,17 +92,50 @@ const SalesForm: React.FC = () => {
   const removeFromCart = (id: number) => {
     setCart(cart.filter((item) => item.product.id !== id));
   };
+  const isValidDate = () => {
+    if (dateAndTime) {
+      const selectedDate = new Date(dateAndTime);
+      const now = new Date();
+      if (selectedDate > now) {
+        return false;
+      }
+    }
+    return true;
+  };
+
+  const isValidDiscount = () => {
+    console.log("aa", discount, "bb", subTotal);
+    if (discount > subTotal) {
+      return false;
+    }
+    return true;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+
+    if (!isValidDate()) {
+      return alert(
+        `o campo Data esta preenchidos de forma incorreta(não pode ser uma data futura)`
+      );
+    }
+    if (!isValidDiscount()) {
+      return alert(
+        `o campo Desconto esta preenchidos de forma incorreta(o valor não pode ser maior que o subtotal)`
+      );
+    }
     let items = cart.map((item) => ({
       productId: item.product.id,
       quantity: item.quantity,
     }));
-    let sale = {
+    let sale: any = {
       items,
       discount,
     };
+    if (dateAndTime) {
+      sale.saleDate = new Date(dateAndTime).toISOString();
+    }
+    console.log("aaaaaa", sale);
     try {
       await axios.post(`${baseUrl}/api/sales`, sale);
       alert("Venda registrada com sucesso!");
@@ -137,7 +174,9 @@ const SalesForm: React.FC = () => {
               <div className={styles.productInfo}>
                 <span>{product.name}</span>
                 <p>{product.description}</p>
-                <span>Preço: R$ {product.sellingPrice}</span>
+                <span>
+                  Preço: {formatCurrency(product.sellingPrice.toString())}
+                </span>
               </div>
             </div>
           ))}
@@ -145,73 +184,90 @@ const SalesForm: React.FC = () => {
       </div>
       <div className={styles.line}></div>
       <div className={styles.cart}>
-        <div className={styles.selectHeader}>Carrinho de compras</div>
-        {cart.map((item) => (
-          <div key={item.product.id} className={styles.cartItem}>
-            <img
-              src={`${baseUrl}/uploads/${item.product.imagePath}`}
-              alt={item.product.name}
-              className={styles.cartProductImage}
+        <div className={styles.cartTop}>
+          <div className={styles.divDateAndTime}>
+            <InputField
+              textLabel="Data e Hora da Venda:"
+              type="datetime-local"
+              nameAndId="dateAndTime"
+              value={dateAndTime}
+              onChange={handleChange}
+              className={styles.dateInput}
             />
-            <div className={styles.cartProductInfo}>
-              <span>{item.product.name}</span>
-              <p>{item.product.description}</p>
-              <span>Preço: R$ {item.product.sellingPrice}</span>
-            </div>
-
-            <div className={styles.quantityControls}>
-              <button
-                onClick={() => decreaseQuantity(item.product.id)}
-                className={styles.quantityButton}
-                disabled={item.quantity <= 1}
-              >
-                -
-              </button>
-              <input
-                type="number"
-                value={item.quantity}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleQuantityChange(
-                    item.product.id,
-                    parseInt(e.target.value)
-                  )
-                }
-                className={styles.quantityInput}
+          </div>
+          <div className={styles.selectHeader}>Carrinho de compras</div>
+          {cart.map((item) => (
+            <div key={item.product.id} className={styles.cartItem}>
+              <img
+                src={`${baseUrl}/uploads/${item.product.imagePath}`}
+                alt={item.product.name}
+                className={styles.cartProductImage}
               />
+              <div className={styles.cartProductInfo}>
+                <span>{item.product.name}</span>
+                <p>{item.product.description}</p>
+                <span>
+                  Preço:{formatCurrency(item.product.sellingPrice.toString())}
+                </span>
+              </div>
+
+              <div className={styles.quantityControls}>
+                <button
+                  onClick={() => decreaseQuantity(item.product.id)}
+                  className={styles.quantityButton}
+                  disabled={item.quantity <= 1}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  value={item.quantity}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleQuantityChange(
+                      item.product.id,
+                      parseInt(e.target.value)
+                    )
+                  }
+                  className={styles.quantityInput}
+                />
+                <button
+                  onClick={() => increaseQuantity(item.product.id)}
+                  className={styles.quantityButton}
+                >
+                  +
+                </button>
+              </div>
+
               <button
-                onClick={() => increaseQuantity(item.product.id)}
-                className={styles.quantityButton}
+                onClick={() => removeFromCart(item.product.id)}
+                className={styles.removeButton}
               >
-                +
+                Remover
               </button>
             </div>
-
-            <button
-              onClick={() => removeFromCart(item.product.id)}
-              className={styles.removeButton}
-            >
-              Remover
+          ))}
+        </div>
+        <div className={styles.cartBottom}>
+          <div className={styles.divDiscount}>
+            <h4>Subtotal: {formatCurrency(subTotal.toString())} </h4>
+            <div>
+              <InputField
+                type="text"
+                className={styles.discount}
+                textLabel="Desconto"
+                value={formatCurrency(discount.toString())}
+                nameAndId={"discount"}
+                divClassName={styles.divInputDiscount}
+                onChange={handleChange}
+              />
+            </div>
+            <h3>Total: {formatCurrency(total.toString())}</h3>
+          </div>
+          <div className={styles.divSubmitButton}>
+            <button onClick={handleSubmit} className={styles.submitButton}>
+              Finalizar Venda
             </button>
           </div>
-        ))}
-        <div className={styles.divDiscount}>
-          <h4>subtotal: R$ {subTotal} </h4>
-          <div>
-            <InputField
-              type="text"
-              className={styles.discount}
-              textLabel="desconto"
-              value={formatCurrency(discount.toString())}
-              nameAndId={"discount"}
-              onChange={handleChange}
-            />
-          </div>
-          <h3>Total: R$ {total}</h3>
-        </div>
-        <div className={styles.divSubmitButton}>
-          <button onClick={handleSubmit} className={styles.submitButton}>
-            Finalizar Venda
-          </button>
         </div>
       </div>
     </div>

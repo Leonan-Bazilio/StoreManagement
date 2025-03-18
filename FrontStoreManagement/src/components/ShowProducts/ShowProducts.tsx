@@ -4,7 +4,7 @@ import styles from "./ShowProducts.module.css";
 import InputField from "../InputField/InputField";
 import ProductDetails from "./ProductDetails/ProductDetails";
 import Product from "../../types/Product";
-
+import formatCurrency from "../../utils/formatCurrency";
 const ShowAllProducts: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
@@ -84,11 +84,7 @@ const ShowAllProducts: React.FC = () => {
                   {truncateDescription(prod.description, 40)}
                 </p>
                 <p className={styles.productPrice}>
-                  <strong>Preço:</strong> R${" "}
-                  {prod.sellingPrice.toLocaleString("pt-BR", {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
+                  {formatCurrency(prod.sellingPrice.toString())}
                 </p>
                 <p className={styles.productStock}>
                   <strong>Estoque:</strong> {prod.quantityInStock}

@@ -71,8 +71,21 @@
 }
 
 .cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   margin-top: 2rem;
   flex: 1.4;
+  min-height: 500px;
+}
+.cartTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.divDateAndTime {
+  max-width: 200px;
+  align-self: flex-start;
 }
 .cartHeader {
   padding: 10px;
@@ -168,6 +181,22 @@
   align-items: end;
   gap: 0.5rem;
   margin-top: 1rem;
+}
+.divInputDiscount label {
+  position: absolute;
+  left: inherit;
+  right: 12px;
+}
+.divInputDiscount input {
+  text-align: end;
+}
+.divInputDiscount input:focus + label,
+.divInputDiscount input:not(:focus):not(:placeholder-shown) + label {
+
+  font-size: 14px;
+  left: inherit;
+  right: 8px;
+  text-align: end;
 }
 .discount {
   width: 100%;
