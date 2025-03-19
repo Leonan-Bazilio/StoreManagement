@@ -1,33 +1,56 @@
-
 .salesForm {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  flex-direction: row;
-  width: 80%;
-  margin: 0 auto;
-  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
 }
-.line {
-  background-color: #ccc;
-  border: 2px solid #f0f0f0;
-  flex: 1;
-  max-width: 5px;
-}
-
 .customSelect {
-  flex: 1;
-  margin-top: 2rem;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  width: 80%;
+  max-width: 850px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: scroll;
+  position: relative;
+}
+.customSelect::-webkit-scrollbar {
+  display: none;
+}
+.closeBtn {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  color: var(--cancel-color);
+  z-index: 99999999999;
+  font-size: 1.5rem;
+  top: 12px;
+  right: 12px;
 }
 
 .selectHeader {
   padding: 10px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
   text-align: center;
   margin-bottom: 1rem;
 }
 
 .selectOptions {
-  background-color: white;
+  background-color: var(--primary-color);
 
   border-radius: 4px;
   flex-direction: column;
@@ -46,13 +69,13 @@
 }
 
 .selectOption:hover {
-  background-color: #f0f0f0;
+  background-color: var(--secondary-color);
 }
 
 .productImage {
   width: 50px;
   height: 50px;
-  object-fit: cover;
+  object-fit: fill;
   margin-right: 10px;
 }
 
@@ -63,129 +86,4 @@
 
 .productInfo span {
   font-weight: bold;
-}
-
-.cart {
-  margin-top: 2rem;
-  flex: 1.4;
-}
-.cartHeader {
-  padding: 10px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  text-align: center;
-  margin-bottom: 1rem;
-}
-
-.cartItem {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-.cartItem:hover {
-  background-color: #f0f0f0;
-}
-.cartProductImage {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
-.cartProductInfo {
-  flex: 1;
-  font-size: 14px;
-}
-
-.cartProductInfo span {
-  font-weight: bold;
-}
-
-.cartProductInfo p {
-  font-size: 12px;
-  margin: 5px 0;
-}
-
-.quantityControls {
-  display: flex;
-  align-items: center;
-}
-
-.quantityButton {
-  width: 30px;
-  height: 30px;
-  background-color: #f1f1f1;
-  border: 1px solid #ccc;
-  cursor: pointer;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.quantityButton:disabled {
-  cursor: not-allowed;
-  background-color: #e0e0e0;
-}
-
-.quantityInput {
-  width: 50px;
-  height: 30px;
-  text-align: center;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.removeButton {
-  margin-left: 10px;
-  background-color: red;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.removeButton:hover {
-  background-color: darkred;
-}
-.divDiscount {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: end;
-  gap: 0.5rem;
-  margin-top: 1rem;
-}
-.discount {
-  max-width: 130px;
-  padding: 8px 16px;
-  border: 1px solid #ccc;
-}
-.discount:focus {
-  border: 2px solid #ccc;
-  outline: none;
-}
-.divSubmitButton {
-  display: flex;
-  justify-content: center;
-}
-
-.submitButton {
-  width: 70%;
-  justify-self: center;
-  align-self: center;
-  padding: 10px 20px;
-  background-color: green;
-  color: white;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.submitButton:hover {
-  background-color: darkgreen;
 }

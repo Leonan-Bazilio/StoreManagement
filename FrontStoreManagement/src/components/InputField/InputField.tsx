@@ -2,7 +2,14 @@ import React, { ChangeEvent } from "react";
 import styles from "./InputField.module.css";
 
 interface InputFieldProps {
-  type?: "text" | "password" | "email" | "textarea" | "number"|"datetime-local";
+  type?:
+    | "text"
+    | "password"
+    | "email"
+    | "textarea"
+    | "number"
+    | "datetime-local"
+    | "date";
   nameAndId: string;
   textLabel: string;
   value: string | number;

@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: Arial, sans-serif;
 }
 :root {
   --primary-color: #ffffff;
@@ -13,6 +14,8 @@
   --success-hover: #1a682c;
   --cancel-color: #dc3545;
   --cancel-hover: #851f29;
+  --alert-color: #ece800;
+  --alert-hover: rgb(176, 173, 4);
   --border-color: #ccc;
   --text-btn-color: white;
   --btn-disabled: #e0e0e0;

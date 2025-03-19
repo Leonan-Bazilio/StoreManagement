@@ -1,15 +1,18 @@
 .container {
   width: 90%;
   max-width: 1200px;
+  min-height: 50vh;
   margin: 0 auto;
   padding: 1rem;
-  font-family: Arial, sans-serif;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
 }
 
 .title {
   font-size: 2rem;
-  margin-bottom: 1rem;
-  color: #333;
+  color: var(--text-color);
+  width: fit-content;
+  margin: 0 auto 1rem auto;
 }
 
 .filters {
@@ -17,34 +20,23 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.searchInput {
-  flex: 1;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
+  gap: 4rem;
 }
 
 .dateFields {
   display: flex;
   gap: 1rem;
 }
-
-.dateField {
+.notFound,
+.error,
+.loading {
+  min-height: 150px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--text-color);
 }
-
-.dateInput {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
 .salesList {
   list-style-type: none;
   padding: 0;
@@ -52,11 +44,11 @@
 }
 
 .saleItem {
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   margin-bottom: 1rem;
-  background: #f9f9f9;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   padding: 1rem;
 }
 
@@ -70,35 +62,51 @@
 .saleDate {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #555;
+  color: var(--text-color);
 }
 
 .saleTime {
   font-size: 1rem;
-  color: #777;
+  color: var(--text-color2);
 }
 
 .saleTotal {
   font-size: 1.1rem;
-  color: #333;
+  color: var(--text-color);
   font-weight: bold;
 }
 
 .expandButton,
 .buttonsFooter button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
   padding: 0.4rem 0.8rem;
   font-size: 0.9rem;
-  background: #007bff;
-  color: white;
+  background-color: var(--success-color);
+  color: var(--text-color);
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+.arrow {
+  transition: transform 0.3s ease;
+}
+.toDetails .arrow {
+  transform: rotate(180deg);
+}
+.toDetails {
+  background-color: var(--alert-color);
 }
 
 .expandButton:hover {
-  background: #0056b3;
+  background-color: var(--success-hover);
 }
-
+.toDetails:hover {
+  background-color: var(--alert-hover);
+}
 .saleDetails {
   display: flex;
   flex-direction: column;
@@ -123,11 +131,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
 }
 .saleItemDetailEach {
   flex-direction: row;
@@ -141,8 +150,8 @@
 .itemImage {
   width: 50px;
   height: 50px;
-  object-fit: cover;
-  border-radius: 5px;
+  object-fit: fill;
+  border-radius: 4px;
 }
 
 .itemName {
@@ -152,7 +161,6 @@
 
 .itemDescription {
   font-size: 0.9rem;
-  color: #666;
 }
 
 .itemRight {
@@ -162,7 +170,7 @@
 .itemSubtotal {
   font-size: 1rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-color2);
 }
 .saleFooter {
   display: flex;
@@ -173,7 +181,7 @@
   text-align: right;
   font-size: 1.1rem;
   margin-top: 0.5rem;
-  color: #333;
+  color: var(--text-color);
 }
 .saleFooterPrice p {
   margin-bottom: 1.5rem;
@@ -183,20 +191,14 @@
   gap: 1rem;
 }
 .buttonsFooter .updateBtn {
-  background-color: rgb(199, 179, 0);
+  background-color: var(--alert-color);
+}
+.buttonsFooter .updateBtn:hover {
+  background-color: var(--alert-hover);
 }
 .buttonsFooter .deleteBtn {
-  background-color: red;
+  background-color: var(--cancel-color);
 }
-
-.loading {
-  text-align: center;
-  font-size: 1.5rem;
-  color: #555;
-}
-
-.error {
-  text-align: center;
-  font-size: 1.5rem;
-  color: red;
+.buttonsFooter .deleteBtn:hover {
+  background-color: var(--cancel-hover);
 }

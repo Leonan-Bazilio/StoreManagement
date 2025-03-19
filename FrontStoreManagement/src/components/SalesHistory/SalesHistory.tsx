@@ -3,6 +3,9 @@ import axios from "axios";
 import styles from "./SalesHistory.module.css";
 import SaleDetails from "./SaleDetails/SaleDetails";
 import Sale from "../../types/Sale";
+import InputField from "../InputField/InputField";
+import { IoIosArrowDown } from "react-icons/io";
+import formatCurrency from "../../utils/formatCurrency";
 
 const SalesHistoryComponent = () => {
   const [salesData, setSalesData] = useState<Sale[]>([]);
@@ -36,7 +39,9 @@ const SalesHistoryComponent = () => {
 
     fetchSalesData();
   }, []);
-
+  const handleClose = (): void => {
+    setSelectedSale(null);
+  };
   const toggleSaleExpand = (saleId: number) => {
     setExpandedSales((prevState) => ({
       ...prevState,
@@ -78,152 +83,191 @@ const SalesHistoryComponent = () => {
     return acc;
   }, {} as Record<string, Sale[]>);
 
-  if (loading) return <div className={styles.loading}>Carregando dados...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
+  if (error)
+    return (
+      <div className={styles.container}>
+        <div className={styles.error}>{error}</div>
+      </div>
+    );
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Histórico de Vendas</h1>
 
       <div className={styles.filters}>
-        <input
+        <InputField
           type="text"
-          id="searchQuery"
+          nameAndId="searchQuery"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Pesquisar Produto"
+          textLabel="Pesquisar Produto"
           className={styles.searchInput}
         />
 
         <div className={styles.dateFields}>
           <div className={styles.dateField}>
-            <label htmlFor="startDate">Data Inicial:</label>
-            <input
+            <InputField
               type="date"
-              id="startDate"
+              nameAndId="startDate"
               value={startDate}
+              textLabel="Data Inicial:"
               onChange={(e) => setStartDate(e.target.value)}
               className={styles.dateInput}
             />
           </div>
 
           <div className={styles.dateField}>
-            <label htmlFor="endDate">Data Final:</label>
-            <input
+            <InputField
               type="date"
-              id="endDate"
+              nameAndId="endDate"
               value={endDate}
+              textLabel="Data Final:"
               onChange={(e) => setEndDate(e.target.value)}
               className={styles.dateInput}
             />
           </div>
         </div>
       </div>
+      {loading ? (
+        <div className={styles.loading}>Carregando dados...</div>
+      ) : Object.keys(groupedSales).length === 0 ? (
+        <div className={styles.notFound}>
+          Nenhuma venda encontrada nessee periodo
+        </div>
+      ) : (
+        <ul className={styles.salesList}>
+          {Object.keys(groupedSales).map((saleDay) => (
+            <li key={saleDay} className={styles.saleItem}>
+              <div className={styles.saleHeader}>
+                <span className={styles.saleDate}>{saleDay}</span>
+                <button
+                  className={`${styles.expandButton} ${
+                    expandedSalesDay[saleDay]
+                      ? styles.toDetails
+                      : styles.toClose
+                  }`}
+                  onClick={() => toggleSalesDayExpand(saleDay)}
+                >
+                  <IoIosArrowDown className={styles.arrow} />
+                  {expandedSalesDay[saleDay] ? "Fechar" : "Detalhes"}
+                </button>
+              </div>
 
-      <ul className={styles.salesList}>
-        {Object.keys(groupedSales).map((saleDay) => (
-          <li key={saleDay} className={styles.saleItem}>
-            <div className={styles.saleHeader}>
-              <span className={styles.saleDate}>{saleDay}</span>
-              <button
-                className={styles.expandButton}
-                onClick={() => toggleSalesDayExpand(saleDay)}
-              >
-                {expandedSalesDay[saleDay] ? "▲ Fechar" : "▼ Detalhes"}
-              </button>
-            </div>
+              {expandedSalesDay[saleDay] && (
+                <div className={styles.saleDetails}>
+                  <ul className={styles.saleItems}>
+                    {groupedSales[saleDay].map((sale) => (
+                      <li key={sale.saleId} className={styles.saleItemDetail}>
+                        <div className={styles.saleHeader}>
+                          <span className={styles.saleTime}>
+                            {new Date(sale.saleDate).toLocaleTimeString(
+                              "pt-BR",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
+                          </span>
+                          <span className={styles.saleTotal}>
+                            Total:{" "}
+                            <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
+                          </span>
+                          <button
+                            className={`${styles.expandButton} ${
+                              expandedSales[sale.saleId]
+                                ? styles.toDetails
+                                : styles.toClose
+                            }`}
+                            onClick={() => toggleSaleExpand(sale.saleId)}
+                          >
+                            <IoIosArrowDown className={styles.arrow} />
+                            {expandedSales[sale.saleId] ? "Fechar" : "Detalhes"}
+                          </button>
+                        </div>
 
-            {expandedSalesDay[saleDay] && (
-              <div className={styles.saleDetails}>
-                <ul className={styles.saleItems}>
-                  {groupedSales[saleDay].map((sale) => (
-                    <li key={sale.saleId} className={styles.saleItemDetail}>
-                      <div className={styles.saleHeader}>
-                        <span className={styles.saleTime}>
-                          {new Date(sale.saleDate).toLocaleTimeString("pt-BR", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                        <span className={styles.saleTotal}>
-                          Total:{" "}
-                          <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
-                        </span>
-                        <button
-                          className={styles.expandButton}
-                          onClick={() => toggleSaleExpand(sale.saleId)}
-                        >
-                          {expandedSales[sale.saleId]
-                            ? "▲ Fechar"
-                            : "▼ Detalhes"}
-                        </button>
-                      </div>
-
-                      {expandedSales[sale.saleId] && (
-                        <div className={styles.saleDetails}>
-                          <ul className={styles.saleItems}>
-                            {sale.items.map((item, index) => (
-                              <li
-                                key={index}
-                                className={styles.saleItemDetailEach}
-                              >
-                                <div className={styles.itemLeft}>
-                                  <img
-                                    src={`${baseUrl}/uploads/${item.imagePath}`}
-                                    alt={item.productNameAtSale}
-                                    className={styles.itemImage}
-                                  />
-                                  <div>
-                                    <p className={styles.itemName}>
-                                      {item.productNameAtSale}
+                        {expandedSales[sale.saleId] && (
+                          <div className={styles.saleDetails}>
+                            <ul className={styles.saleItems}>
+                              {sale.items.map((item, index) => (
+                                <li
+                                  key={index}
+                                  className={styles.saleItemDetailEach}
+                                >
+                                  <div className={styles.itemLeft}>
+                                    <img
+                                      src={`${baseUrl}/uploads/${item.imagePath}`}
+                                      alt={item.productNameAtSale}
+                                      className={styles.itemImage}
+                                    />
+                                    <div>
+                                      <p className={styles.itemName}>
+                                        {item.productNameAtSale}
+                                      </p>
+                                      <p className={styles.itemDescription}>
+                                        {item.productDescriptionAtSale}
+                                      </p>
+                                    </div>
+                                  </div>
+                                  <div className={styles.itemRight}>
+                                    <p>
+                                      {item.quantity} x{" "}
+                                      {formatCurrency(
+                                        item.sellingPriceAtSale.toString()
+                                      )}
                                     </p>
-                                    <p className={styles.itemDescription}>
-                                      {item.productDescriptionAtSale}
+                                    <p className={styles.itemSubtotal}>
+                                      {item.subTotal
+                                        ? formatCurrency(
+                                            item.subTotal.toString()
+                                          )
+                                        : "R$ 0,00"}
                                     </p>
                                   </div>
-                                </div>
-                                <div className={styles.itemRight}>
-                                  <p>
-                                    {item.quantity} x R${" "}
-                                    {item.sellingPriceAtSale.toFixed(2)}
-                                  </p>
-                                  <p className={styles.itemSubtotal}>
-                                    R$ {item.subTotal?.toFixed(2)}
-                                  </p>
-                                </div>
-                              </li>
-                            ))}
-                          </ul>
+                                </li>
+                              ))}
+                            </ul>
 
-                          <div className={styles.saleFooter}>
-                            <div className={styles.buttonsFooter}>
-                              <button
-                                onClick={() => setSelectedSale(sale)}
-                                className={styles.updateBtn}
-                              >
-                                Atualizar
-                              </button>
-                              <button className={styles.deleteBtn}>
-                                Deletar
-                              </button>
+                            <div className={styles.saleFooter}>
+                              <div className={styles.buttonsFooter}>
+                                <button
+                                  onClick={() => setSelectedSale(sale)}
+                                  className={styles.updateBtn}
+                                >
+                                  Atualizar
+                                </button>
+                                <button className={styles.deleteBtn}>
+                                  Deletar
+                                </button>
+                              </div>
+                              <div className={styles.saleFooterPrice}>
+                                <p>
+                                  Desconto:{" "}
+                                  {formatCurrency(sale.discount.toString())}
+                                </p>
+                                Total:{" "}
+                                <strong>
+                                  {sale.totalPrice
+                                    ? formatCurrency(
+                                        sale.totalPrice?.toString()
+                                      )
+                                    : "R$ 0,00"}
+                                </strong>
+                              </div>
                             </div>
-                            <div className={styles.saleFooterPrice}>
-                              <p>Desconto: {sale.discount.toFixed(2)}</p>
-                              Total:{" "}
-                              <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
-                            </div>
+                            {selectedSale && (
+                              <SaleDetails sale={sale} onClose={handleClose} />
+                            )}
                           </div>
-                          {selectedSale && <SaleDetails sale={sale} />}
-                        </div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

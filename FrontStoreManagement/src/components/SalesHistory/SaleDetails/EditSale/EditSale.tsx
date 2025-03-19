@@ -5,24 +5,19 @@ import InputField from "../../../InputField/InputField";
 import Product from "../../../../types/Product";
 import SaleItem from "../../../../types/SaleItem";
 import Sale from "../../../../types/Sale";
-
+import { FaTimes } from "react-icons/fa";
 interface EditSaleProps {
   cart: { items: SaleItem[] };
   setCart: React.Dispatch<React.SetStateAction<Sale>>;
-  setAddingProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose: () => void;
 }
 
-const EditSale: React.FC<EditSaleProps> = ({
-  cart,
-  setCart,
-  setAddingProduct,
-}) => {
+const EditSale: React.FC<EditSaleProps> = ({ cart, setCart, onClose }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const baseUrl = import.meta.env.VITE_BASE_URL;
 
-  // Efetua a requisição para pegar os produtos
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -46,7 +41,6 @@ const EditSale: React.FC<EditSaleProps> = ({
     return !productInCart && productMatch;
   });
 
-  // Lida com a seleção de um produto e adiciona ao carrinho
   const handleProductSelect = (product: Product) => {
     const newItem = {
       productId: product.id,
@@ -67,6 +61,9 @@ const EditSale: React.FC<EditSaleProps> = ({
   return (
     <div className={styles.salesForm}>
       <div className={styles.customSelect}>
+        <button className={styles.closeBtn} onClick={onClose}>
+          <FaTimes className={styles.icon} />
+        </button>
         <div className={styles.selectHeader}>Selecione os produtos</div>
         <InputField
           nameAndId={"searchTerm"}
@@ -85,7 +82,7 @@ const EditSale: React.FC<EditSaleProps> = ({
               className={styles.selectOption}
               onClick={() => {
                 handleProductSelect(product);
-                setAddingProduct(false);
+                onClose();
               }}
             >
               <img

@@ -102,172 +102,177 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
             minute: "2-digit",
           })}
         </span>
-        <div className={styles.divCloseBtn}>
-          <button className={styles.closeBtn} onClick={onClose}>
-            <FaTimes className={styles.icon} />
-          </button>
-        </div>
-        {editingProduct ? (
-          <form className={styles.form} onSubmit={handleUpdate}>
-            <div className={styles.row}>
-              <div className={styles.imageContainer}>
-                <label htmlFor="fileInput" className={styles.imageLabel}>
-                  <input
-                    type="file"
-                    id="fileInput"
-                    className={styles.imageInput}
-                    onChange={handleImageChange}
+
+        <button className={styles.closeBtn} onClick={onClose}>
+          <FaTimes className={styles.icon} />
+        </button>
+
+        <div className={styles.contentDetails}>
+          {editingProduct ? (
+            <form className={styles.form} onSubmit={handleUpdate}>
+              <div className={styles.row}>
+                <div className={styles.imageContainer}>
+                  <label htmlFor="fileInput" className={styles.imageLabel}>
+                    <input
+                      type="file"
+                      id="fileInput"
+                      className={styles.imageInput}
+                      onChange={handleImageChange}
+                    />
+                    {image ? (
+                      <img
+                        src={URL.createObjectURL(image)}
+                        alt="Imagem Selecionada"
+                        className={styles.previewImage}
+                      />
+                    ) : (
+                      <img
+                        className={styles.image}
+                        src={`${baseUrl}/uploads/${product.imagePath}`}
+                        alt={productData.name}
+                      />
+                    )}
+                  </label>
+                </div>
+                <div className={styles.textInputs}>
+                  <InputField
+                    type="text"
+                    nameAndId="name"
+                    textLabel="Nome do Produto"
+                    value={productData.name}
+                    onChange={handleChange}
+                    className={styles.input}
                   />
-                  {image ? (
-                    <img
-                      src={URL.createObjectURL(image)}
-                      alt="Imagem Selecionada"
-                      className={styles.previewImage}
-                    />
-                  ) : (
-                    <img
-                      className={styles.image}
-                      src={`${baseUrl}/uploads/${product.imagePath}`}
-                      alt={productData.name}
-                    />
-                  )}
-                </label>
+                  <InputField
+                    type="textarea"
+                    nameAndId="description"
+                    textLabel="Descrição do Produto"
+                    value={productData.description}
+                    onChange={handleChange}
+                    className={styles.textarea}
+                  />
+                </div>
               </div>
-              <div className={styles.textInputs}>
+              <div className={styles.row}>
                 <InputField
                   type="text"
-                  nameAndId="name"
-                  textLabel="Nome do Produto"
-                  value={productData.name}
+                  nameAndId="costPrice"
+                  textLabel="Preço de Custo"
+                  value={formatCurrency(productData.costPrice.toString())}
                   onChange={handleChange}
                   className={styles.input}
                 />
                 <InputField
-                  type="textarea"
-                  nameAndId="description"
-                  textLabel="Descrição do Produto"
-                  value={productData.description}
+                  type="text"
+                  nameAndId="sellingPrice"
+                  textLabel="Preço de Venda"
+                  value={formatCurrency(productData.sellingPrice.toString())}
                   onChange={handleChange}
-                  className={styles.textarea}
                 />
               </div>
-            </div>
-            <div className={styles.row}>
-              <InputField
-                type="text"
-                nameAndId="costPrice"
-                textLabel="Preço de Custo"
-                value={formatCurrency(productData.costPrice.toString())}
-                onChange={handleChange}
-                className={styles.input}
-              />
-              <InputField
-                type="text"
-                nameAndId="sellingPrice"
-                textLabel="Preço de Venda"
-                value={formatCurrency(productData.sellingPrice.toString())}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.row}>
-              <InputField
-                type="number"
-                nameAndId="quantityInStock"
-                textLabel="Quantidade em Estoque"
-                value={productData.quantityInStock}
-                onChange={handleChange}
-              />
-              <InputField
-                type="number"
-                nameAndId="lowStockLimit"
-                textLabel="Estoque Mínimo"
-                value={productData.lowStockLimit}
-                onChange={handleChange}
-              />
-              <InputField
-                type="number"
-                nameAndId="criticalStockLimit"
-                textLabel="Quantidade de Alerta"
-                value={productData.criticalStockLimit}
-                onChange={handleChange}
-              />
-            </div>
-            <div className={styles.divBtnsEditing}>
-              <button
-                type="button"
-                className={styles.btnCancel}
-                onClick={handleEditing}
-              >
-                Cancelar
-              </button>
-              <button type="submit" className={styles.btnEdit}>
-                Salvar
-              </button>
-            </div>
-          </form>
-        ) : (
-          <>
-            <div className={styles.row1}>
-              <img
-                className={styles.image}
-                src={`${baseUrl}/uploads/${productData.imagePath}`}
-                alt={productData.name}
-              />
-              <div className={styles.textContent}>
-                <h2>{productData.name}</h2>
-                <p>{productData.description}</p>
+              <div className={styles.row}>
+                <InputField
+                  type="number"
+                  nameAndId="quantityInStock"
+                  textLabel="Quantidade em Estoque"
+                  value={productData.quantityInStock}
+                  onChange={handleChange}
+                />
+                <InputField
+                  type="number"
+                  nameAndId="lowStockLimit"
+                  textLabel="Estoque Mínimo"
+                  value={productData.lowStockLimit}
+                  onChange={handleChange}
+                />
+                <InputField
+                  type="number"
+                  nameAndId="criticalStockLimit"
+                  textLabel="Quantidade de Alerta"
+                  value={productData.criticalStockLimit}
+                  onChange={handleChange}
+                />
               </div>
-            </div>
-            <div className={styles.row2}>
-              <div className={styles.divField}>
-                <p>Preço de custo: </p>
-                <p>{formatCurrency(productData.costPrice.toString())}</p>
+              <div className={styles.divBtnsEditing}>
+                <button
+                  type="button"
+                  className={styles.btnCancel}
+                  onClick={handleEditing}
+                >
+                  Cancelar
+                </button>
+                <button type="submit" className={styles.btnEdit}>
+                  Salvar
+                </button>
               </div>
-              <div className={styles.divField}>
-                <p>Preço de venda </p>
-                <p>{formatCurrency(productData.sellingPrice.toString())}</p>
+            </form>
+          ) : (
+            <>
+              <div className={styles.row1}>
+                <img
+                  className={styles.image}
+                  src={`${baseUrl}/uploads/${productData.imagePath}`}
+                  alt={productData.name}
+                />
+                <div className={styles.textContent}>
+                  <h2>{productData.name}</h2>
+                  <p>{productData.description}</p>
+                </div>
               </div>
-            </div>
-            <div className={styles.row3}>
-              <div className={styles.stockSection}>
+              <div className={styles.row2}>
                 <div className={styles.divField}>
-                  <p>Quantidade em Estoque: </p>
-                  <p> {productData.quantityInStock}</p>
+                  <p>Preço de custo: </p>
+                  <p>{formatCurrency(productData.costPrice.toString())}</p>
                 </div>
-                <div className={styles.addStock}>
-                  <InputField
-                    type="number"
-                    nameAndId="stockQuantity"
-                    textLabel="Adicionar ao estoque"
-                    value={addStock}
-                    onChange={(
-                      e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-                    ) => {
-                      setAddStock(Number(e.target.value));
-                    }}
-                    className={styles.inputStock}
-                  />
-                  <button className={styles.addButton} onClick={handleAddStock}>
-                    Adicionar
-                  </button>
+                <div className={styles.divField}>
+                  <p>Preço de venda </p>
+                  <p>{formatCurrency(productData.sellingPrice.toString())}</p>
                 </div>
               </div>
-              <div className={styles.divField}>
-                <p>Estoque minimo recomendado:</p>
-                <p>{productData.lowStockLimit}</p>
+              <div className={styles.row3}>
+                <div className={styles.stockSection}>
+                  <div className={styles.divField}>
+                    <p>Quantidade em Estoque: </p>
+                    <p> {productData.quantityInStock}</p>
+                  </div>
+                  <div className={styles.addStock}>
+                    <InputField
+                      type="number"
+                      nameAndId="stockQuantity"
+                      textLabel="Adicionar ao estoque"
+                      value={addStock}
+                      onChange={(
+                        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+                      ) => {
+                        setAddStock(Number(e.target.value));
+                      }}
+                      className={styles.inputStock}
+                    />
+                    <button
+                      className={styles.addButton}
+                      onClick={handleAddStock}
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.divField}>
+                  <p>Estoque minimo recomendado:</p>
+                  <p>{productData.lowStockLimit}</p>
+                </div>
+                <div className={styles.divField}>
+                  <p>Estoque alerta: </p>
+                  <p>{productData.criticalStockLimit}</p>
+                </div>
               </div>
-              <div className={styles.divField}>
-                <p>Estoque alerta: </p>
-                <p>{productData.criticalStockLimit}</p>
+              <div className={styles.divBtns}>
+                <button className={styles.btnEdit} onClick={handleEditing}>
+                  Editar
+                </button>
               </div>
-            </div>
-            <div className={styles.divBtns}>
-              <button className={styles.btnEdit} onClick={handleEditing}>
-                Editar
-              </button>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
