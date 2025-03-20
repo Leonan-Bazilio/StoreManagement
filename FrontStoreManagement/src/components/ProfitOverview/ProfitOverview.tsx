@@ -5,6 +5,7 @@ import exportSalesPDF from "../../utils/exportSalesPDF";
 import Sale from "../../types/Sale";
 import InputField from "../InputField/InputField";
 import { IoIosArrowDown } from "react-icons/io";
+import formatCurrency from "../../utils/formatCurrency";
 
 const ProfitOverview: React.FC = () => {
   const [salesData, setSalesData] = useState<Sale[]>([]);
@@ -148,7 +149,8 @@ const ProfitOverview: React.FC = () => {
         <>
           <div className={styles.summary}>
             <p>
-              Lucro Total Filtrado: <strong>R$ {totalProfit.toFixed(2)}</strong>
+              Lucro Total Filtrado:{" "}
+              <strong>R$ {formatCurrency(totalProfit.toString())}</strong>
             </p>
           </div>
           <ul className={styles.salesList}>
@@ -189,7 +191,9 @@ const ProfitOverview: React.FC = () => {
                             </span>
                             <span className={styles.saleTotal}>
                               Total:{" "}
-                              <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
+                              <strong>
+                                R$ {formatCurrency(sale.totalPrice!.toString())}
+                              </strong>
                             </span>
                             <button
                               className={`${styles.expandButton} ${
@@ -220,26 +224,34 @@ const ProfitOverview: React.FC = () => {
                                     </span>
                                     <span className={styles.itemCost}>
                                       Custo: R${" "}
-                                      {item.costPriceAtSale.toFixed(2)}
+                                      {formatCurrency(
+                                        item.costPriceAtSale.toString()
+                                      )}
                                     </span>
                                     <span className={styles.itemSelling}>
                                       Venda: R${" "}
-                                      {item.sellingPriceAtSale.toFixed(2)}
+                                      {formatCurrency(
+                                        item.sellingPriceAtSale.toString()
+                                      )}
                                     </span>
                                     <span className={styles.itemProfit}>
                                       Lucro: R${" "}
-                                      {(
-                                        item.quantity *
-                                        (item.sellingPriceAtSale -
-                                          item.costPriceAtSale)
-                                      ).toFixed(2)}
+                                      {formatCurrency(
+                                        (
+                                          item.quantity *
+                                          (item.sellingPriceAtSale -
+                                            item.costPriceAtSale)
+                                        ).toString()
+                                      )}
                                     </span>
                                   </div>
                                 ))}
                               </div>
                               <p className={styles.subtotal}>
                                 Lucro da venda: R${" "}
-                                {calculateProfit(sale).toFixed(2)}
+                                {formatCurrency(
+                                  calculateProfit(sale).toString()
+                                )}
                               </p>
                             </div>
                           )}

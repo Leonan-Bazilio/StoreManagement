@@ -136,7 +136,7 @@
   border: 1px solid var(--border-color);
   border-radius: 4px;
   margin-bottom: 0.5rem;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 .saleItemDetailEach {
   flex-direction: row;

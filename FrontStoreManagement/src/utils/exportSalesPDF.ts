@@ -2,7 +2,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
 import Sale from "../types/Sale";
-
+import formatCurrency from "./formatCurrency";
 const exportSalesPDF = (sales: Sale[]) => {
   const doc = new jsPDF();
 
@@ -70,11 +70,11 @@ const exportSalesPDF = (sales: Sale[]) => {
     totalProfit += data.profit;
     return [
       name,
-      data.cost.toFixed(2),
-      data.selling.toFixed(2),
+      formatCurrency(data.cost.toString()),
+      formatCurrency(data.selling.toString()),
       data.quantity,
-      data.total.toFixed(2),
-      data.profit.toFixed(2),
+      formatCurrency(data.total.toString()),
+      formatCurrency(data.profit.toString()),
     ];
   });
 
@@ -83,16 +83,16 @@ const exportSalesPDF = (sales: Sale[]) => {
     "",
     "",
     "",
-    totalValue.toFixed(2),
-    totalProfit.toFixed(2),
+    formatCurrency(totalValue.toString()),
+    formatCurrency(totalProfit.toString()),
   ]);
   productRows.push([
     "",
     "",
     "",
     "",
-    totalDiscounts.toFixed(2),
-    (totalProfit - totalDiscounts).toFixed(2),
+    formatCurrency(totalDiscounts.toString()),
+    formatCurrency((totalProfit - totalDiscounts).toString()),
   ]);
 
   doc.text("Resumo de Vendas por Produto", 14, 10);
@@ -130,9 +130,9 @@ const exportSalesPDF = (sales: Sale[]) => {
     return [
       date,
       data.quantity,
-      data.total.toFixed(2),
-      data.discount.toFixed(2),
-      (data.profit - data.discount).toFixed(2),
+      formatCurrency(data.total.toString()),
+      formatCurrency(data.discount.toString()),
+      formatCurrency((data.profit - data.discount).toString()),
     ];
   });
 

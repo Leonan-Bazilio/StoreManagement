@@ -16,7 +16,7 @@
   color: var(--text-color);
   border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-  padding: 2.5rem;
+  padding: 2.5rem 2.5rem 4rem 2.5rem;
   width: 80%;
   max-width: 850px;
   display: flex;
@@ -49,6 +49,7 @@
   background-color: transparent;
   border: none;
   color: var(--cancel-color);
+  cursor: pointer;
 }
 
 @keyframes fadeIn {
@@ -120,22 +121,6 @@ p::first-letter {
   max-width: 170px;
 }
 
-.addButton,
-.btnEdit,
-.btnCancel {
-  background-color: var(--success-color);
-  color: var(--text-btn-color);
-  border: none;
-  border-radius: 4px;
-  padding: 0.75rem 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.addButton:hover,
-.btnEdit:hover {
-  background-color: var(--success-hover);
-}
 .divField {
   display: flex;
   flex-direction: column;
@@ -148,27 +133,44 @@ p::first-letter {
 }
 .divBtns {
   display: flex;
-  justify-content: end;
 }
 .divBtnsEditing {
   display: flex;
   justify-content: space-between;
 }
+.addButton,
 .btnEdit,
-.btnCancel {
-  font-size: 1.25rem;
+.btnCancel,
+.btnDelete {
+  background-color: var(--success-color);
+  color: var(--text-btn-color);
+  border: none;
+  border-radius: 4px;
   padding: 0.625rem 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btnEdit,
+.btnCancel,
+.btnDelete {
+  font-size: 1.25rem;
   position: absolute;
   bottom: 12px;
+}
+.addButton:hover,
+.btnEdit:hover {
+  background-color: var(--success-hover);
 }
 .btnEdit {
   right: 12px;
 }
-.btnCancel {
+.btnCancel,
+.btnDelete {
   background-color: var(--cancel-color);
   left: 12px;
 }
-.btnCancel:hover {
+.btnCancel:hover,
+.btnDelete:hover {
   background-color: var(--cancel-hover);
 }
 .divBtns .btnCancel {

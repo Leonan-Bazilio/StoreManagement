@@ -68,6 +68,19 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
       alert("Erro ao atualizar produto");
     }
   };
+  const handleDelete = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await axios.delete(`${baseUrl}/api/products/${product.id}`);
+      alert("Produto excluido com sucesso");
+      refreshProducts();
+      onClose();
+    } catch (error) {
+      console.error("Erro ao excluir produto:", error);
+      alert("Erro ao excluir produto");
+    }
+  };
 
   const handleAddStock = async () => {
     try {
@@ -268,6 +281,9 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({
               <div className={styles.divBtns}>
                 <button className={styles.btnEdit} onClick={handleEditing}>
                   Editar
+                </button>
+                <button className={styles.btnDelete} onClick={handleDelete}>
+                  excluir
                 </button>
               </div>
             </>

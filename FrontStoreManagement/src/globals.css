@@ -6,29 +6,36 @@
 }
 :root {
   --primary-color: #ffffff;
-  --secondary-color: #f0f0f0;
-  --text-color: #262626;
-  --text-color2: #6b6b6b;
-  --hover-color: #ff6347;
+  --secondary-color: #e0e0e0;
+  --text-color: #333333;
+  --text-color2: #666666;
+  --hover-color: #007bff;
   --success-color: #28a745;
-  --success-hover: #1a682c;
+  --success-hover: #218838;
   --cancel-color: #dc3545;
-  --cancel-hover: #851f29;
-  --alert-color: #ece800;
-  --alert-hover: rgb(176, 173, 4);
+  --cancel-hover: #c82333;
+  --alert-color: #ffc107;
+  --alert-hover: #e0a800;
   --border-color: #ccc;
-  --text-btn-color: white;
+  --text-btn-color: #ffffff;
   --btn-disabled: #e0e0e0;
   --btn-active: #f1f1f1;
 }
 
 [data-theme="dark"] {
   --primary-color: #121212;
-  --secondary-color: #a0a0a0;
-  --text-color: blue;
-  --text-color2: red;
+  --secondary-color: #333333;
+  --text-color: #e0e0e0;
+  --text-color2: #b0b0b0;
   --hover-color: #ff6347;
-  --success-color: #28a745;
-  --cancel-color: #dc3545;
-  --border-color: #444;
+  --success-color: #4caf4fba;
+  --success-hover: #45a049ab;
+  --cancel-color: #c82333;
+  --cancel-hover: #a71d2a;
+  --alert-color: #e0a800c7;
+  --alert-hover: #d39e00cd;
+  --border-color: #555;
+  --text-btn-color: #ffffff;
+  --btn-disabled: #444444;
+  --btn-active: #666666;
 }

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./LowStock.module.css";
-import generateLowStockPDF from "../../utils/generateLowStockPDF.js";
+import generateLowStockPDF from "../../utils/generateLowStockPDF.ts";
 import Product from "../../types/Product.js";
 
 const LowStock: React.FC = () => {
