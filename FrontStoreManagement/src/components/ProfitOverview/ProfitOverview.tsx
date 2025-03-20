@@ -3,6 +3,8 @@ import axios from "axios";
 import styles from "./ProfitOverview.module.css";
 import exportSalesPDF from "../../utils/exportSalesPDF";
 import Sale from "../../types/Sale";
+import InputField from "../InputField/InputField";
+import { IoIosArrowDown } from "react-icons/io";
 
 const ProfitOverview: React.FC = () => {
   const [salesData, setSalesData] = useState<Sale[]>([]);
@@ -93,146 +95,174 @@ const ProfitOverview: React.FC = () => {
       [saleDay]: !prevState[saleDay],
     }));
   };
-
-  if (loading) return <div className={styles.loading}>Carregando dados...</div>;
-  if (error) return <div className={styles.error}>{error}</div>;
-
+  if (error)
+    return (
+      <div className={styles.container}>
+        <div className={styles.error}>{error}</div>
+      </div>
+    );
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Relatorio de vendas</h1>
       <div className={styles.filters}>
-        <input
+        <InputField
           type="text"
-          placeholder="Pesquisar Produto"
+          nameAndId="searchQuery"
           value={searchQuery}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setSearchQuery(e.target.value)
-          }
+          onChange={(e) => setSearchQuery(e.target.value)}
+          textLabel="Pesquisar Produto"
           className={styles.searchInput}
         />
+
         <div className={styles.dateFields}>
           <div className={styles.dateField}>
-            <label htmlFor="startDate">Data Inicial:</label>
-            <input
+            <InputField
               type="date"
-              id="startDate"
+              nameAndId="startDate"
               value={startDate}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setStartDate(e.target.value)
-              }
+              textLabel="Data Inicial:"
+              onChange={(e) => setStartDate(e.target.value)}
               className={styles.dateInput}
             />
           </div>
+
           <div className={styles.dateField}>
-            <label htmlFor="endDate">Data Final:</label>
-            <input
+            <InputField
               type="date"
-              id="endDate"
+              nameAndId="endDate"
               value={endDate}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                setEndDate(e.target.value)
-              }
+              textLabel="Data Final:"
+              onChange={(e) => setEndDate(e.target.value)}
               className={styles.dateInput}
             />
           </div>
         </div>
       </div>
-      <div className={styles.summary}>
-        <p>
-          Lucro Total Filtrado: <strong>R$ {totalProfit.toFixed(2)}</strong>
-        </p>
-      </div>
-      <ul className={styles.salesList}>
-        {Object.keys(groupedSales).map((saleDay) => (
-          <li key={saleDay} className={styles.saleItem}>
-            <div className={styles.saleHeader}>
-              <span className={styles.saleDate}>{saleDay}</span>
+      {loading ? (
+        <div className={styles.loading}>Carregando dados...</div>
+      ) : Object.keys(groupedSales).length === 0 ? (
+        <div className={styles.notFound}>
+          Nenhuma venda encontrada nessee periodo
+        </div>
+      ) : (
+        <>
+          <div className={styles.summary}>
+            <p>
+              Lucro Total Filtrado: <strong>R$ {totalProfit.toFixed(2)}</strong>
+            </p>
+          </div>
+          <ul className={styles.salesList}>
+            {Object.keys(groupedSales).map((saleDay) => (
+              <li key={saleDay} className={styles.saleItem}>
+                <div className={styles.saleHeader}>
+                  <span className={styles.saleDate}>{saleDay}</span>
 
-              <button
-                className={styles.expandButton}
-                onClick={() => toggleSalesDayExpand(saleDay)}
-              >
-                {expandedSalesDay[saleDay] ? "▲ Fechar" : "▼ Detalhes"}
-              </button>
-            </div>
-            {expandedSalesDay[saleDay] && (
-              <div className={styles.saleDetails}>
-                <div className={styles.saleItems}>
-                  {groupedSales[saleDay].map((sale) => (
-                    <div key={sale.saleId} className={styles.saleItemDetail}>
-                      <div className={styles.saleHeader}>
-                        <span className={styles.saleTime}>
-                          {new Date(sale.saleDate).toLocaleTimeString("pt-BR", {
-                            hour: "2-digit",
-                            minute: "2-digit",
-                          })}
-                        </span>
-                        <span className={styles.saleTotal}>
-                          Total:{" "}
-                          <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
-                        </span>
-                        <button
-                          className={styles.expandButton}
-                          onClick={() => toggleSaleExpand(sale.saleId)}
-                        >
-                          {expandedSales[sale.saleId]
-                            ? "▲ Fechar"
-                            : "▼ Detalhes"}
-                        </button>
-                      </div>
-
-                      {expandedSales[sale.saleId] && (
-                        <div className={styles.saleDetails}>
-                          <div className={styles.saleItems}>
-                            {sale.items.map((item, index) => (
-                              <div
-                                key={index}
-                                className={styles.saleItemDetailEach}
-                              >
-                                <span className={styles.itemName}>
-                                  {item.productNameAtSale} (Qtd: {item.quantity}
-                                  )
-                                </span>
-                                <span className={styles.itemCost}>
-                                  Custo: R$ {item.costPriceAtSale.toFixed(2)}
-                                </span>
-                                <span className={styles.itemSelling}>
-                                  Venda: R$ {item.sellingPriceAtSale.toFixed(2)}
-                                </span>
-                                <span className={styles.itemProfit}>
-                                  Lucro: R${" "}
-                                  {(
-                                    item.quantity *
-                                    (item.sellingPriceAtSale -
-                                      item.costPriceAtSale)
-                                  ).toFixed(2)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-                          <p className={styles.subtotal}>
-                            Lucro da venda: R${" "}
-                            {calculateProfit(sale).toFixed(2)}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+                  <button
+                    className={`${styles.expandButton} ${
+                      expandedSalesDay[saleDay]
+                        ? styles.toDetails
+                        : styles.toClose
+                    }`}
+                    onClick={() => toggleSalesDayExpand(saleDay)}
+                  >
+                    <IoIosArrowDown className={styles.arrow} />
+                    {expandedSalesDay[saleDay] ? "Fechar" : "Detalhes"}
+                  </button>
                 </div>
-                <p className={styles.subtotal}>
-                  lucro do dia: R$ {calculateProfitDay(groupedSales[saleDay])}
-                </p>
-              </div>
-            )}
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={() => exportSalesPDF(filteredSales)}
-        className={styles.exportButton}
-      >
-        Exportar PDF
-      </button>
+                {expandedSalesDay[saleDay] && (
+                  <div className={styles.saleDetails}>
+                    <div className={styles.saleItems}>
+                      {groupedSales[saleDay].map((sale) => (
+                        <div
+                          key={sale.saleId}
+                          className={styles.saleItemDetail}
+                        >
+                          <div className={styles.saleHeader}>
+                            <span className={styles.saleTime}>
+                              {new Date(sale.saleDate).toLocaleTimeString(
+                                "pt-BR",
+                                {
+                                  hour: "2-digit",
+                                  minute: "2-digit",
+                                }
+                              )}
+                            </span>
+                            <span className={styles.saleTotal}>
+                              Total:{" "}
+                              <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
+                            </span>
+                            <button
+                              className={`${styles.expandButton} ${
+                                expandedSales[sale.saleId]
+                                  ? styles.toDetails
+                                  : styles.toClose
+                              }`}
+                              onClick={() => toggleSaleExpand(sale.saleId)}
+                            >
+                              <IoIosArrowDown className={styles.arrow} />
+                              {expandedSales[sale.saleId]
+                                ? "Fechar"
+                                : "Detalhes"}
+                            </button>
+                          </div>
+
+                          {expandedSales[sale.saleId] && (
+                            <div className={styles.saleDetails}>
+                              <div className={styles.saleItems}>
+                                {sale.items.map((item, index) => (
+                                  <div
+                                    key={index}
+                                    className={styles.saleItemDetailEach}
+                                  >
+                                    <span className={styles.itemName}>
+                                      {item.productNameAtSale} (Qtd:{" "}
+                                      {item.quantity})
+                                    </span>
+                                    <span className={styles.itemCost}>
+                                      Custo: R${" "}
+                                      {item.costPriceAtSale.toFixed(2)}
+                                    </span>
+                                    <span className={styles.itemSelling}>
+                                      Venda: R${" "}
+                                      {item.sellingPriceAtSale.toFixed(2)}
+                                    </span>
+                                    <span className={styles.itemProfit}>
+                                      Lucro: R${" "}
+                                      {(
+                                        item.quantity *
+                                        (item.sellingPriceAtSale -
+                                          item.costPriceAtSale)
+                                      ).toFixed(2)}
+                                    </span>
+                                  </div>
+                                ))}
+                              </div>
+                              <p className={styles.subtotal}>
+                                Lucro da venda: R${" "}
+                                {calculateProfit(sale).toFixed(2)}
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                    <p className={styles.subtotal}>
+                      lucro do dia: R${" "}
+                      {calculateProfitDay(groupedSales[saleDay])}
+                    </p>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
+          <button
+            onClick={() => exportSalesPDF(filteredSales)}
+            className={styles.exportButton}
+          >
+            Exportar PDF
+          </button>
+        </>
+      )}
     </div>
   );
 };

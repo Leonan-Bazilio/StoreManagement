@@ -140,6 +140,7 @@ const SalesForm: React.FC = () => {
       await axios.post(`${baseUrl}/api/sales`, sale);
       alert("Venda registrada com sucesso!");
       setCart([]);
+      setDiscount(0)
     } catch (error) {
       console.error(error);
     }

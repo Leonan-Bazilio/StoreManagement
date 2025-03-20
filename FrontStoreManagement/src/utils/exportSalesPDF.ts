@@ -1,325 +1,151 @@
-import { jsPDF } from "jspdf";
-import "jspdf-autotable";
-import Sale from "../types/Sale";
+import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-const exportSalesPDF = (filteredSales: Sale[]): void => {
+import Sale from "../types/Sale";
+
+const exportSalesPDF = (sales: Sale[]) => {
   const doc = new jsPDF();
-  doc.text("Relatório Consolidado de Vendas", 14, 20);
 
-  const consolidatedTableColumn = [
-    "Produto",
-    "Qtd. Total",
-    "Custo Total",
-    "Venda Total",
-    "Lucro Total",
-  ];
-
-  const consolidatedTableRows: any[] = [];
-  const productSummary: {
-    [key: string]: {
+  const productSummary: Record<
+    string,
+    {
       quantity: number;
-      costTotal: number;
-      sellingTotal: number;
-      profitTotal: number;
-    };
-  } = {};
+      total: number;
+      profit: number;
+      cost: number;
+      selling: number;
+    }
+  > = {};
+  const dailySummary: Record<
+    string,
+    { quantity: number; total: number; discount: number; profit: number }
+  > = {};
 
-  filteredSales.forEach((sale) => {
+  let totalDiscounts = 0;
+
+  sales.forEach((sale) => {
+    // @ts-ignore
+    const saleDate = sale.saleDate.split("T")[0];
+    if (!dailySummary[saleDate]) {
+      dailySummary[saleDate] = {
+        quantity: 0,
+        total: 0,
+        discount: 0,
+        profit: 0,
+      };
+    }
+
     sale.items.forEach((item) => {
-      const {
-        productNameAtSale: name,
-        costPriceAtSale: costPrice,
-        sellingPriceAtSale: sellingPrice,
-        quantity,
-      } = item;
-
-      if (!productSummary[name]) {
-        productSummary[name] = {
+      if (!productSummary[item.productNameAtSale]) {
+        productSummary[item.productNameAtSale] = {
           quantity: 0,
-          costTotal: 0,
-          sellingTotal: 0,
-          profitTotal: 0,
+          total: 0,
+          profit: 0,
+          cost: item.costPriceAtSale,
+          selling: item.sellingPriceAtSale,
         };
       }
+      productSummary[item.productNameAtSale].quantity += item.quantity;
+      productSummary[item.productNameAtSale].total += item.subTotal!;
+      productSummary[item.productNameAtSale].profit +=
+        (item.sellingPriceAtSale - item.costPriceAtSale) * item.quantity;
 
-      productSummary[name].quantity += quantity;
-      productSummary[name].costTotal += quantity * costPrice;
-      productSummary[name].sellingTotal += quantity * sellingPrice;
-      productSummary[name].profitTotal += quantity * (sellingPrice - costPrice);
+      dailySummary[saleDate].quantity += item.quantity;
+      dailySummary[saleDate].total += item.subTotal!;
+      dailySummary[saleDate].profit +=
+        (item.sellingPriceAtSale - item.costPriceAtSale) * item.quantity;
     });
+
+    dailySummary[saleDate].discount += sale.discount;
+    totalDiscounts += sale.discount; // Agora os descontos são somados corretamente
   });
 
-  let totalQuantity = 0;
-  let totalCost = 0;
-  let totalSelling = 0;
+  let totalProducts = 0;
+  let totalValue = 0;
   let totalProfit = 0;
 
-  const sortedProducts = Object.keys(productSummary).sort();
-
-  sortedProducts.forEach((productName) => {
-    const { quantity, costTotal, sellingTotal, profitTotal } =
-      productSummary[productName];
-
-    consolidatedTableRows.push({
-      Produto: { content: productName, styles: { fontStyle: "normal" } },
-      "Qtd. Total": { content: quantity, styles: { fontStyle: "normal" } },
-      "Custo Total": {
-        content: costTotal.toFixed(2),
-        styles: { fontStyle: "normal" },
-      },
-      "Venda Total": {
-        content: sellingTotal.toFixed(2),
-        styles: { fontStyle: "normal" },
-      },
-      "Lucro Total": {
-        content: profitTotal.toFixed(2),
-        styles: { fontStyle: "normal" },
-      },
-    });
-
-    totalQuantity += quantity;
-    totalCost += costTotal;
-    totalSelling += sellingTotal;
-    totalProfit += profitTotal;
-  });
-
-  consolidatedTableRows.push({
-    Produto: { content: "TOTAL", styles: { fontStyle: "bold" } },
-    "Qtd. Total": { content: totalQuantity, styles: { fontStyle: "bold" } },
-    "Custo Total": {
-      content: totalCost.toFixed(2),
-      styles: { fontStyle: "bold" },
-    },
-    "Venda Total": {
-      content: totalSelling.toFixed(2),
-      styles: { fontStyle: "bold" },
-    },
-    "Lucro Total": {
-      content: totalProfit.toFixed(2),
-      styles: { fontStyle: "bold" },
-    },
-  });
-
-  autoTable(doc, {
-    head: [consolidatedTableColumn],
-    body: consolidatedTableRows,
-    startY: 30,
-    styles: { fontSize: 10 },
-    headStyles: { fillColor: [40, 167, 69] },
-    footStyles: { fontStyle: "bold", fillColor: [220, 220, 220] },
-  });
-
-  const salesByDay: { [key: string]: Sale[] } = {};
-
-  filteredSales.forEach((sale) => {
-    const saleDate = new Date(sale.saleDate).toLocaleDateString("pt-BR");
-    if (!salesByDay[saleDate]) {
-      salesByDay[saleDate] = [];
-    }
-    salesByDay[saleDate].push(sale);
-  });
-
-  Object.keys(salesByDay).forEach((saleDay) => {
-    doc.text(saleDay, 14, 30);
-
-    const dailySummaryTableColumn = [
-      "Produto",
-      "Qtd. Total",
-      "Custo Total",
-      "Venda Total",
-      "Lucro Total",
+  const productRows = Object.entries(productSummary).map(([name, data]) => {
+    totalProducts += data.quantity;
+    totalValue += data.total;
+    totalProfit += data.profit;
+    return [
+      name,
+      data.cost.toFixed(2),
+      data.selling.toFixed(2),
+      data.quantity,
+      data.total.toFixed(2),
+      data.profit.toFixed(2),
     ];
-    const dailySummaryTableRows: any[] = [];
-    const dailySummary: {
-      [key: string]: {
-        quantity: number;
-        costTotal: number;
-        sellingTotal: number;
-        profitTotal: number;
-      };
-    } = {};
-
-    let dayTotalQuantity = 0;
-    let dayTotalCost = 0;
-    let dayTotalSelling = 0;
-    let dayTotalProfit = 0;
-
-    salesByDay[saleDay].forEach((sale) => {
-      sale.items.forEach((item) => {
-        const {
-          productNameAtSale: name,
-          costPriceAtSale: costPrice,
-          sellingPriceAtSale: sellingPrice,
-        } = item;
-        const quantity = item.quantity;
-
-        if (!dailySummary[name]) {
-          dailySummary[name] = {
-            quantity: 0,
-            costTotal: 0,
-            sellingTotal: 0,
-            profitTotal: 0,
-          };
-        }
-
-        dailySummary[name].quantity += quantity;
-        dailySummary[name].costTotal += quantity * costPrice;
-        dailySummary[name].sellingTotal += quantity * sellingPrice;
-        dailySummary[name].profitTotal += quantity * (sellingPrice - costPrice);
-      });
-    });
-
-    const sortedDailyProducts = Object.keys(dailySummary).sort();
-
-    sortedDailyProducts.forEach((productName) => {
-      const { quantity, costTotal, sellingTotal, profitTotal } =
-        dailySummary[productName];
-
-      dailySummaryTableRows.push({
-        Produto: { content: productName, styles: { fontStyle: "normal" } },
-        "Qtd. Total": { content: quantity, styles: { fontStyle: "normal" } },
-        "Custo Total": {
-          content: costTotal.toFixed(2),
-          styles: { fontStyle: "normal" },
-        },
-        "Venda Total": {
-          content: sellingTotal.toFixed(2),
-          styles: { fontStyle: "normal" },
-        },
-        "Lucro Total": {
-          content: profitTotal.toFixed(2),
-          styles: { fontStyle: "normal" },
-        },
-      });
-
-      dayTotalQuantity += quantity;
-      dayTotalCost += costTotal;
-      dayTotalSelling += sellingTotal;
-      dayTotalProfit += profitTotal;
-    });
-
-    dailySummaryTableRows.push({
-      Produto: { content: "TOTAL", styles: { fontStyle: "bold" } },
-      "Qtd. Total": {
-        content: dayTotalQuantity,
-        styles: { fontStyle: "bold" },
-      },
-      "Custo Total": {
-        content: dayTotalCost.toFixed(2),
-        styles: { fontStyle: "bold" },
-      },
-      "Venda Total": {
-        content: dayTotalSelling.toFixed(2),
-        styles: { fontStyle: "bold" },
-      },
-      "Lucro Total": {
-        content: dayTotalProfit.toFixed(2),
-        styles: { fontStyle: "bold" },
-      },
-    });
-
-    autoTable(doc, {
-      head: [dailySummaryTableColumn],
-      body: dailySummaryTableRows,
-      styles: { fontSize: 10 },
-      headStyles: { fillColor: [40, 167, 69] },
-      footStyles: { fontStyle: "bold", fillColor: [220, 220, 220] },
-    });
-
-    salesByDay[saleDay].forEach((sale) => {
-      const saleTime = new Date(sale.saleDate).toLocaleTimeString("pt-BR", {
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-
-      const salesTableColumn = [
-        saleTime,
-        "Custo (UN)",
-        "Venda",
-        "Qtd.",
-        "Custo Total",
-        "Venda Total",
-        "Lucro Total",
-      ];
-      const salesTableRows: any[] = [];
-
-      let saleTotalQuantity = 0;
-      let saleTotalCost = 0;
-      let saleTotalSelling = 0;
-      let saleTotalProfit = 0;
-
-      sale.items.forEach((item) => {
-        const {
-          productNameAtSale: name,
-          costPriceAtSale: costPrice,
-          sellingPriceAtSale: sellingPrice,
-        } = item;
-        const quantity = item.quantity;
-        const costTotal = quantity * costPrice;
-        const sellingTotal = quantity * sellingPrice;
-        const profitTotal = sellingTotal - costTotal;
-
-        salesTableRows.push({
-          Produto: { content: name, styles: { fontStyle: "normal" } },
-          "Custo (UN)": {
-            content: costPrice.toFixed(2),
-            styles: { fontStyle: "normal" },
-          },
-          Venda: {
-            content: sellingPrice.toFixed(2),
-            styles: { fontStyle: "normal" },
-          },
-          "Qtd.": { content: quantity, styles: { fontStyle: "normal" } },
-          "Custo Total": {
-            content: costTotal.toFixed(2),
-            styles: { fontStyle: "normal" },
-          },
-          "Venda Total": {
-            content: sellingTotal.toFixed(2),
-            styles: { fontStyle: "normal" },
-          },
-          "Lucro Total": {
-            content: profitTotal.toFixed(2),
-            styles: { fontStyle: "normal" },
-          },
-        });
-
-        saleTotalQuantity += quantity;
-        saleTotalCost += costTotal;
-        saleTotalSelling += sellingTotal;
-        saleTotalProfit += profitTotal;
-      });
-
-      salesTableRows.push({
-        Produto: { content: "TOTAL", styles: { fontStyle: "bold" } },
-        "Custo (UN)": { content: "", styles: { fontStyle: "bold" } },
-        Venda: { content: "", styles: { fontStyle: "bold" } },
-        "Qtd.": { content: saleTotalQuantity, styles: { fontStyle: "bold" } },
-        "Custo Total": {
-          content: saleTotalCost.toFixed(2),
-          styles: { fontStyle: "bold" },
-        },
-        "Venda Total": {
-          content: saleTotalSelling.toFixed(2),
-          styles: { fontStyle: "bold" },
-        },
-        "Lucro Total": {
-          content: saleTotalProfit.toFixed(2),
-          styles: { fontStyle: "bold" },
-        },
-      });
-
-      autoTable(doc, {
-        head: [salesTableColumn],
-        body: salesTableRows,
-        styles: { fontSize: 9 },
-        headStyles: { fillColor: [100, 100, 255] },
-      });
-    });
   });
 
-  doc.save("Relatorio_Consolidado_Vendas.pdf");
+  productRows.push([
+    "TOTAL",
+    "",
+    "",
+    "",
+    totalValue.toFixed(2),
+    totalProfit.toFixed(2),
+  ]);
+  productRows.push([
+    "",
+    "",
+    "",
+    "",
+    totalDiscounts.toFixed(2),
+    (totalProfit - totalDiscounts).toFixed(2),
+  ]);
+
+  doc.text("Resumo de Vendas por Produto", 14, 10);
+  autoTable(doc, {
+    startY: 15,
+    head: [
+      [
+        "Produto",
+        "Custo Unit.",
+        "Venda Unit.",
+        "Qtd. Vendida",
+        "Valor Total",
+        "Lucro Total",
+      ],
+    ],
+    body: productRows,
+    styles: { fontSize: 10 },
+    didParseCell: function (data) {
+      if (data.row.index >= productRows.length - 2) {
+        data.cell.styles.fontStyle = "bold";
+      }
+    },
+  });
+
+  let totalDailyProducts = 0;
+  let totalDailyRevenue = 0;
+  let totalDailyDiscounts = 0;
+  let totalDailyProfit = 0;
+
+  const dailyRows = Object.entries(dailySummary).map(([date, data]) => {
+    totalDailyProducts += data.quantity;
+    totalDailyRevenue += data.total;
+    totalDailyDiscounts += data.discount;
+    totalDailyProfit += data.profit - data.discount;
+    return [
+      date,
+      data.quantity,
+      data.total.toFixed(2),
+      data.discount.toFixed(2),
+      (data.profit - data.discount).toFixed(2),
+    ];
+  });
+
+  doc.addPage();
+  doc.text("Resumo de Vendas por Dia", 14, 10);
+  autoTable(doc, {
+    startY: 15,
+    head: [["Data", "Qtd. Total", "Preço Total", "Descontos", "Lucro Total"]],
+    body: dailyRows,
+    styles: { fontSize: 10 },
+  });
+
+  doc.save("relatorio_vendas.pdf");
 };
 
 export default exportSalesPDF;
