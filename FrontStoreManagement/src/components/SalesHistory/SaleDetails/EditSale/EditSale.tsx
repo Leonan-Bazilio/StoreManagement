@@ -6,6 +6,7 @@ import Product from "../../../../types/Product";
 import SaleItem from "../../../../types/SaleItem";
 import Sale from "../../../../types/Sale";
 import { FaTimes } from "react-icons/fa";
+import formatCurrency from "../../../../utils/formatCurrency";
 interface EditSaleProps {
   cart: { items: SaleItem[] };
   setCart: React.Dispatch<React.SetStateAction<Sale>>;
@@ -93,7 +94,9 @@ const EditSale: React.FC<EditSaleProps> = ({ cart, setCart, onClose }) => {
               <div className={styles.productInfo}>
                 <span>{product.name}</span>
                 <p>{product.description}</p>
-                <span>Preço: R$ {product.sellingPrice}</span>
+                <span>
+                  Preço: {formatCurrency(product.sellingPrice.toString())}
+                </span>
               </div>
             </div>
           ))}

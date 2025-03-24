@@ -39,6 +39,7 @@
   font-size: 1.5rem;
   top: 12px;
   right: 12px;
+  cursor: pointer;
 }
 
 .selectHeader {

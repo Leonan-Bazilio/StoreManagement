@@ -170,7 +170,9 @@ const SalesHistoryComponent = () => {
                           </span>
                           <span className={styles.saleTotal}>
                             Total:{" "}
-                            <strong>R$ {sale.totalPrice?.toFixed(2)}</strong>
+                            <strong>
+                              {formatCurrency(sale.totalPrice!.toString())}
+                            </strong>
                           </span>
                           <button
                             className={`${styles.expandButton} ${

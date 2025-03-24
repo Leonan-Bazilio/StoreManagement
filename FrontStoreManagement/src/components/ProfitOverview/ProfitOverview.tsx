@@ -150,7 +150,7 @@ const ProfitOverview: React.FC = () => {
           <div className={styles.summary}>
             <p>
               Lucro Total Filtrado:{" "}
-              <strong>R$ {formatCurrency(totalProfit.toString())}</strong>
+              <strong>{formatCurrency(totalProfit.toString())}</strong>
             </p>
           </div>
           <ul className={styles.salesList}>
@@ -192,7 +192,7 @@ const ProfitOverview: React.FC = () => {
                             <span className={styles.saleTotal}>
                               Total:{" "}
                               <strong>
-                                R$ {formatCurrency(sale.totalPrice!.toString())}
+                                {formatCurrency(sale.totalPrice!.toString())}
                               </strong>
                             </span>
                             <button
@@ -223,19 +223,19 @@ const ProfitOverview: React.FC = () => {
                                       {item.quantity})
                                     </span>
                                     <span className={styles.itemCost}>
-                                      Custo: R${" "}
+                                      Custo:{" "}
                                       {formatCurrency(
                                         item.costPriceAtSale.toString()
                                       )}
                                     </span>
                                     <span className={styles.itemSelling}>
-                                      Venda: R${" "}
+                                      Venda:{" "}
                                       {formatCurrency(
                                         item.sellingPriceAtSale.toString()
                                       )}
                                     </span>
                                     <span className={styles.itemProfit}>
-                                      Lucro: R${" "}
+                                      Lucro:{" "}
                                       {formatCurrency(
                                         (
                                           item.quantity *
@@ -248,7 +248,7 @@ const ProfitOverview: React.FC = () => {
                                 ))}
                               </div>
                               <p className={styles.subtotal}>
-                                Lucro da venda: R${" "}
+                                Lucro da venda:{" "}
                                 {formatCurrency(
                                   calculateProfit(sale).toString()
                                 )}
@@ -259,8 +259,10 @@ const ProfitOverview: React.FC = () => {
                       ))}
                     </div>
                     <p className={styles.subtotal}>
-                      lucro do dia: R${" "}
-                      {calculateProfitDay(groupedSales[saleDay])}
+                      lucro do dia:{" "}
+                      {formatCurrency(
+                        calculateProfitDay(groupedSales[saleDay]).toString()
+                      )}
                     </p>
                   </div>
                 )}
