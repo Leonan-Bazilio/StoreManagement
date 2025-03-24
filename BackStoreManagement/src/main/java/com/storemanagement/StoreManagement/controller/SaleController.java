@@ -1,6 +1,7 @@
 package com.storemanagement.StoreManagement.controller;
 
 import com.storemanagement.StoreManagement.dto.SaleDTO;
+import com.storemanagement.StoreManagement.dto.SaleWithPricesDTO;
 import com.storemanagement.StoreManagement.entity.Sale;
 import com.storemanagement.StoreManagement.service.SaleService;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +15,26 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SaleController {
     private final SaleService saleService;
+    @GetMapping("/prices")
+    public ResponseEntity<List<SaleWithPricesDTO>> getAllSalesWithPrices() {
+        return ResponseEntity.ok(saleService.getAllSalesWithPrice());
+    }
     
+    @GetMapping("/{id}")
+    public ResponseEntity<Sale> getSaleById(@PathVariable Long id) {
+        return ResponseEntity.ok(saleService.getSaleById(id));
+    }
     @PostMapping
     public ResponseEntity<Sale> createSale(@RequestBody SaleDTO saleDTO) {
         Sale createdSale = saleService.createSale(saleDTO);
         return ResponseEntity.status(201).body(createdSale);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Sale> updateSale(@PathVariable Long id,@RequestBody SaleDTO saleDTO){
+        Sale updatedSale = saleService.updateSale(id,saleDTO);
+        return ResponseEntity.status(201).body(updatedSale);
+    
     }
     
     @GetMapping
@@ -26,10 +42,6 @@ public class SaleController {
         return ResponseEntity.ok(saleService.getAllSales());
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<Sale> getSaleById(@PathVariable Long id) {
-        return ResponseEntity.ok(saleService.getSaleById(id));
-    }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSale(@PathVariable Long id) {

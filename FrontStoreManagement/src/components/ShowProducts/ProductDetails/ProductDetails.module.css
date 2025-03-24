@@ -1,0 +1,236 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+
+.content {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem 2.5rem 4rem 2.5rem;
+  width: 80%;
+  max-width: 850px;
+  display: flex;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90vh;
+  height: 90vh;
+
+  position: relative;
+}
+.contentDetails {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 1.5rem;
+  overflow-y: auto;
+}
+.contentDetails::-webkit-scrollbar {
+  display: none;
+}
+.createDate {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+}
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+  color: var(--cancel-color);
+  cursor: pointer;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.row1 {
+  display: flex;
+  gap: 2rem;
+}
+
+.image {
+  height: 200px;
+  width: 200px;
+  border-radius: 8px;
+  object-fit: fill;
+}
+
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+
+.textContent h2 {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+.container p,
+.container h2 {
+  background-color: var(--primary-color);
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+p::first-letter {
+  text-transform: uppercase;
+}
+.textContent p {
+  flex: 1;
+}
+.row2 {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.row3 {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+  justify-content: space-between;
+}
+.addStock {
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+.inputStock {
+  max-width: 170px;
+}
+
+.divField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+}
+.divField p {
+  width: 100%;
+  text-align: center;
+}
+.divBtns {
+  display: flex;
+}
+.divBtnsEditing {
+  display: flex;
+  justify-content: space-between;
+}
+.addButton,
+.btnEdit,
+.btnCancel,
+.btnDelete {
+  background-color: var(--success-color);
+  color: var(--text-btn-color);
+  border: none;
+  border-radius: 4px;
+  padding: 0.625rem 1.25rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.btnEdit,
+.btnCancel,
+.btnDelete {
+  font-size: 1.25rem;
+  position: absolute;
+  bottom: 12px;
+}
+.addButton:hover,
+.btnEdit:hover {
+  background-color: var(--success-hover);
+}
+.btnEdit {
+  right: 12px;
+}
+.btnCancel,
+.btnDelete {
+  background-color: var(--cancel-color);
+  left: 12px;
+}
+.btnCancel:hover,
+.btnDelete:hover {
+  background-color: var(--cancel-hover);
+}
+.divBtns .btnCancel {
+  display: none;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.imageContainer {
+  flex: 1 1 200px;
+  display: flex;
+  justify-content: center;
+}
+
+.imageInput {
+  display: none;
+}
+
+.imageLabel {
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.imageLabel:hover {
+  border-color: var(--success-color);
+}
+
+.previewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.textInputs {
+  flex: 2 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.textarea {
+  height: 100%;
+}

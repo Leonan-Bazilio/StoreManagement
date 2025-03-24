@@ -14,16 +14,18 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 .input {
+  background-color: var(--primary-color);
+  color: var(--text-color);
   width: 100%;
   padding: 20px 12px 8px 12px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.2s;
 }
 
 .input:focus {
-  border-color: #007bff;
+  border-color: var(--success-color);
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
@@ -32,7 +34,7 @@ input::-webkit-inner-spin-button {
   position: absolute;
   left: 12px;
   top: 0;
-  color: #6b6b6b;
+  color: var(--text-color2);
   font-size: 16px;
   transform: translateY(15px);
   transition: all 0.3s ease;

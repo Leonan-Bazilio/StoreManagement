@@ -71,8 +71,11 @@ public class ProductService {
     
     public Product addQuantityInStock(Long id, int quantityToAdd){
         Product product = getProductById(id);
+        if (product.getQuantityInStock() + quantityToAdd< 0) {
+            throw new BusinessException("Estoque insuficiente para o produto: " + product.getName());
+        }
         int updatedQuantity = product.getQuantityInStock()+quantityToAdd;
         product.setQuantityInStock(updatedQuantity);
-        return product;
+        return productRepository.save(product);
     }
 }

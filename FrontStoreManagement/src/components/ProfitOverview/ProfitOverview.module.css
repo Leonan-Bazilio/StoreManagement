@@ -1,0 +1,184 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  background-color: var(--secondary-color);
+  border-radius: 8px;
+  color: var(--text-color);
+}
+.notFound,
+.error,
+.loading {
+  min-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+.title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 4rem;
+}
+
+.dateFields {
+  display: flex;
+  gap: 1rem;
+}
+
+.summary {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.salesList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.saleItem {
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  background: var(--primary-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+}
+
+.saleHeader {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.saleDate {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.saleTime {
+  font-size: 1rem;
+}
+
+.expandButton {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background: var(--success-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.expandButton:hover {
+  background: var(--success-hover);
+}
+
+.saleDetails {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.saleItems {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.saleItemDetail,
+.saleItemDetailEach {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: var(--primary-color);
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.saleItemDetailEach {
+  flex-direction: row;
+}
+
+.itemName {
+  flex: 3;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.itemCost,
+.itemSelling,
+.itemProfit {
+  flex: 1;
+  text-align: right;
+  font-size: 1rem;
+}
+
+.subtotal {
+  text-align: right;
+  font-weight: bold;
+  margin-top: 1rem;
+  color: var(--text-color2);
+}
+
+.expandButton,
+.buttonsFooter button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  background-color: var(--success-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.arrow {
+  transition: transform 0.3s ease;
+}
+.toDetails .arrow {
+  transform: rotate(180deg);
+}
+.toDetails {
+  background-color: var(--alert-color);
+}
+
+.expandButton:hover {
+  background-color: var(--success-hover);
+}
+.toDetails:hover {
+  background-color: var(--alert-hover);
+}
+.exportButton {
+  background-color: var(--alert-color);
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: var(--text-color);
+  cursor: pointer;
+}
+.exportButton:hover {
+  background-color: var(--alert-hover);
+}

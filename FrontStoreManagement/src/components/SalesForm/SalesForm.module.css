@@ -1,0 +1,229 @@
+.salesForm {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 0 auto;
+  gap: 2rem;
+  background-color: var(--secondary-color);
+}
+.line {
+  background-color: var(--primary-color);
+  border: 2px solid var(--border-color);
+  flex: 1;
+  max-width: 5px;
+}
+
+.customSelect {
+  flex: 1;
+  margin-top: 2rem;
+}
+
+.selectHeader {
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.selectOptions {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  border-radius: 4px;
+  flex-direction: column;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+.selectOptions::-webkit-scrollbar {
+  display: none;
+}
+.selectOption {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.selectOption:hover {
+  background-color: var(--secondary-color);
+}
+
+.productImage {
+  width: 50px;
+  height: 50px;
+  object-fit: fill;
+  margin-right: 10px;
+}
+
+.productInfo {
+  font-size: 14px;
+  flex: 1;
+}
+
+.productInfo span {
+  font-weight: bold;
+}
+
+.cart {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 2rem;
+  flex: 1.4;
+  min-height: 500px;
+}
+.cartTop {
+  display: flex;
+  flex-direction: column;
+}
+
+.divDateAndTime {
+  max-width: 200px;
+  align-self: flex-start;
+}
+.cartHeader {
+  padding: 10px;
+  background-color: var(--primary-color);
+  border: 1px solid var(--border-color);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.cartItem {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.cartItem:hover {
+  background-color: var(--secondary-color);
+}
+.cartProductImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.cartProductInfo {
+  flex: 1;
+  font-size: 14px;
+}
+
+.cartProductInfo span {
+  font-weight: bold;
+}
+
+.cartProductInfo p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+}
+
+.quantityButton {
+  width: 30px;
+  height: 30px;
+  background-color: var(--btn-active);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityButton:disabled {
+  cursor: not-allowed;
+  background-color: var(--btn-disabled);
+}
+
+.quantityInput {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  font-size: 16px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.removeButton {
+  margin-left: 10px;
+  background-color: var(--cancel-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: var(--cancel-hover);
+}
+.divDiscount {
+  color: var(--text-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.divInputDiscount label {
+  position: absolute;
+  left: inherit;
+  right: 12px;
+}
+.divInputDiscount input {
+  text-align: end;
+}
+.divInputDiscount input:focus + label,
+.divInputDiscount input:not(:focus):not(:placeholder-shown) + label {
+
+  font-size: 14px;
+  left: inherit;
+  right: 8px;
+  text-align: end;
+}
+.discount {
+  width: 100%;
+  max-width: 130px;
+
+  border: 1px solid var(--border-color);
+}
+
+.divSubmitButton {
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 70%;
+  justify-self: center;
+  align-self: center;
+  padding: 10px 20px;
+  background-color: var(--success-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.submitButton:hover {
+  background-color: var(--success-hover);
+}

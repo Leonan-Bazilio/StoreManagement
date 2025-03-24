@@ -1,0 +1,232 @@
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+.containerItems {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  padding: 2.5rem;
+  width: 80%;
+  max-width: 850px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90vh;
+  position: relative;
+}
+.containerList {
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+.containerList::-webkit-scrollbar {
+  display: none;
+}
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 1.5rem;
+  background-color: transparent;
+  border: none;
+  color: var(--cancel-color);
+  cursor: pointer;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.cartItem {
+  background-color: var(--primary-color);
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin: 0 auto;
+  border-radius: 4px;
+  padding: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+.cartItem:hover {
+  background-color: var(--secondary-color);
+}
+.cartProductImage {
+  width: 50px;
+  height: 50px;
+  object-fit: fill;
+  margin-right: 10px;
+}
+
+.cartProductInfo {
+  flex: 1;
+  font-size: 14px;
+}
+
+.cartProductInfo span {
+  font-weight: bold;
+}
+
+.cartProductInfo p {
+  font-size: 12px;
+  margin: 5px 0;
+}
+
+.quantityControls {
+  display: flex;
+  align-items: center;
+}
+
+.quantityButton {
+  width: 30px;
+  height: 30px;
+  background-color: var(--btn-active);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantityButton:disabled {
+  cursor: not-allowed;
+  background-color: var(--btn-disabled);
+}
+
+.quantityInput {
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  font-size: 16px;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.removeButton {
+  margin-left: 10px;
+  background-color: var(--cancel-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.removeButton:hover {
+  background-color: var(--cancel-hover);
+}
+.divDiscount {
+  color: var(--text-color);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: end;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+.divInputDiscount label {
+  position: absolute;
+  left: inherit;
+  right: 12px;
+}
+.divInputDiscount input {
+  text-align: end;
+}
+.divInputDiscount input:focus + label,
+.divInputDiscount input:not(:focus):not(:placeholder-shown) + label {
+  font-size: 14px;
+  left: inherit;
+  right: 8px;
+  text-align: end;
+}
+.discount {
+  width: 100%;
+  max-width: 130px;
+
+  border: 1px solid var(--border-color);
+}
+
+.divSubmitButton {
+  display: flex;
+  justify-content: center;
+}
+
+.submitButton {
+  width: 70%;
+  justify-self: center;
+  align-self: center;
+  padding: 10px 20px;
+  background-color: var(--success-color);
+  color: var(--text-color);
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px auto;
+}
+
+.submitButton:hover {
+  background-color: darkgreen;
+}
+
+.addSale {
+  width: 100%;
+  height: 75px;
+  background-color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+}
+.addSale button {
+  transform: scale(0.9);
+  transition: all 0.3s ease;
+  font-size: 3rem;
+  padding: 6px 16px;
+  border-radius: 100%;
+  background-color: var(--alert-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+}
+.addSale:hover {
+  background-color: var(--secondary-color);
+}
+.addSale:hover button {
+  background-color: var(--alert-hover);
+  transform: scale(1);
+}
+
+.addingProductContainer {
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+.hide {
+  display: none;
+}

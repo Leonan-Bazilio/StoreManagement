@@ -3,9 +3,12 @@ import axios from "axios";
 import styles from "./ProductForm.module.css";
 import InputField from "../InputField/InputField";
 import Product from "../../types/Product";
+import formatCurrency from "../../utils/formatCurrency";
 
 const ProductForm: React.FC = () => {
-  const [product, setProduct] = useState<Product>({
+  const [product, setProduct] = useState<
+    Omit<Product, "id" | "imagePath" | "createdAt">
+  >({
     name: "",
     description: "",
     costPrice: 0,
@@ -22,7 +25,16 @@ const ProductForm: React.FC = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setProduct({ ...product, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    if (name === "costPrice" || name === "sellingPrice") {
+      setProduct({
+        ...product,
+        [name]: parseFloat(value.replace(/[^\d.-]/g, "")) || 0,
+      });
+    } else {
+      setProduct({ ...product, [name]: value });
+    }
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -98,18 +110,18 @@ const ProductForm: React.FC = () => {
       </div>
       <div className={styles.row}>
         <InputField
-          type="number"
+          type="text"
           nameAndId="costPrice"
           textLabel="Preço de Custo"
-          value={product.costPrice}
+          value={formatCurrency(product.costPrice.toString())}
           onChange={handleChange}
           className={styles.input}
         />
         <InputField
-          type="number"
+          type="text"
           nameAndId="sellingPrice"
           textLabel="Preço de Venda"
-          value={product.sellingPrice}
+          value={formatCurrency(product.sellingPrice.toString())}
           onChange={handleChange}
         />
       </div>
@@ -136,9 +148,11 @@ const ProductForm: React.FC = () => {
           onChange={handleChange}
         />
       </div>
-      <button type="submit" className={styles.submitButton}>
-        Cadastrar Produto
-      </button>
+      <div className={styles.divBtn}>
+        <button type="submit" className={styles.submitButton}>
+          Cadastrar Produto
+        </button>
+      </div>
     </form>
   );
 };
